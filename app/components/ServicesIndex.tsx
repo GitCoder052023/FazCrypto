@@ -23,11 +23,11 @@ export default function ServicesIndex() {
         <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-[#e6e6e6]">
           <div>
             <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-4">
-              [ 02 // COMMERCIAL SERVICE CATALOG ]
+              [ 02 // SERVICES &amp; INDICATIVE PRICING ]
             </div>
             <h2 className="type-heading font-medium tracking-tight text-[#000000]">
-              Commercial capabilities.
-              <span className="block italic text-[#808080] font-normal">Predictable scope, defensible baseline pricing.</span>
+              Commercial capabilities &amp; pricing.
+              <span className="block italic text-[#808080] font-normal">Predictable scope, fixed-fee deliverables, day-one code ownership.</span>
             </h2>
           </div>
 

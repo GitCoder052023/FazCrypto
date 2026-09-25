@@ -1,11 +1,9 @@
 import AgencyNav from "./components/AgencyNav";
 import HeroSection from "./components/HeroSection";
-import ProblemSection from "./components/ProblemSection";
 import ServicesIndex from "./components/ServicesIndex";
-import WorkflowSection from "./components/WorkflowSection";
-import TechTaxonomy from "./components/TechTaxonomy";
 import CaseStudiesSection from "./components/CaseStudiesSection";
-import PrinciplesSection from "./components/PrinciplesSection";
+import ApproachSection from "./components/ApproachSection";
+import TechnologySummary from "./components/TechnologySummary";
 import EngagementModel from "./components/EngagementModel";
 import ProjectScopeEstimator from "./components/ProjectScopeEstimator";
 import Footer from "./components/Footer";
@@ -16,37 +14,31 @@ export default function Home() {
       {/* Navigation */}
       <AgencyNav />
 
-      {/* Main Narrative Flow */}
+      {/* Main Commercial Narrative Flow */}
       <main className="flex-1">
-        {/* 01: Dark Hero Surface with Architectural Proposition & Interactive Topology */}
+        {/* 01: Hero - Commercial Proposition & Studio Capabilities */}
         <HeroSection />
 
-        {/* 02: Editorial Split on Client Reality vs Architectural Intervention */}
-        <ProblemSection />
-
-        {/* 03: Numbered Editorial Service Architecture (Not 6 identical cards!) */}
+        {/* 02: Central Commercial Service Catalog & Indicative Pricing */}
         <ServicesIndex />
 
-        {/* 04: Directed Engineering Workflow & Automated Verification Gates */}
-        <WorkflowSection />
-
-        {/* 05: Engineering Taxonomy & Concrete Tradeoff Rationale */}
-        <TechTaxonomy />
-
-        {/* 06: Selected Systems Case Studies with Varied Compositions */}
+        {/* 03: Selected Production Work & Verifiable Case Studies */}
         <CaseStudiesSection />
 
-        {/* 07: Engineering Commitments & Anti-Patterns We Reject */}
-        <PrinciplesSection />
+        {/* 04: How We Work, Guarantees & Agency Comparison */}
+        <ApproachSection />
 
-        {/* 08: Transparent Engagement Pods & Milestone Structures */}
+        {/* 05: Core Technology Capabilities & Architectural Rationale */}
+        <TechnologySummary />
+
+        {/* 06: Transparent Engagement Models & Retainer Pods */}
         <EngagementModel />
 
-        {/* 09: Interactive Scoping Terminal & Direct Consultation Action */}
+        {/* 07: Structured Project Scoping & Direct Inbound Intake */}
         <ProjectScopeEstimator />
       </main>
 
-      {/* Footer */}
+      {/* 08: Global Footer */}
       <Footer />
     </div>
   );

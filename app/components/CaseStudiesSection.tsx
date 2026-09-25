@@ -64,18 +64,19 @@ export default function CaseStudiesSection() {
   ];
 
   return (
-    <section id="cases" className="py-24 md:py-32 bg-[#ffffff] text-[#000000] border-b border-[#e6e6e6]">
+    <section id="work" className="py-24 md:py-32 bg-[#ffffff] text-[#000000] border-b border-[#e6e6e6] scroll-mt-20">
+      <div id="cases" />
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10">
         
         {/* Section Header */}
         <div className="pb-8 mb-16 border-b border-[#e6e6e6] flex flex-col md:flex-row md:items-end justify-between">
           <div>
             <div className="text-[11px] font-mono uppercase tracking-[0.15em] text-[#666666] mb-3">
-              05 / SELECTED SYSTEMS PORTFOLIO
+              03 / SELECTED CLIENT WORK &amp; PRODUCTION EVIDENCE
             </div>
             <h2 className="type-heading font-normal text-[#000000] tracking-tight">
               Production evidence from the critical path. <br className="hidden sm:inline" />
-              <span className="italic text-[#808080]">Real architectural interventions with verifiable outcomes.</span>
+              <span className="italic text-[#808080]">Real systems built for real operations with verifiable outcomes.</span>
             </h2>
           </div>
           <div className="mt-6 md:mt-0 font-mono text-xs text-[#666666]">

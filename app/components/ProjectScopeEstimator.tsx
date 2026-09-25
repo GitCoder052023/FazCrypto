@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { saveDemoBookingRequest } from "@/lib/services-data";
 
 export default function ProjectScopeEstimator() {
-  const [selectedArchetype, setSelectedArchetype] = useState<string>("core");
+  const [selectedArchetype, setSelectedArchetype] = useState<string>("custom-web-application");
   const [selectedConstraints, setSelectedConstraints] = useState<string[]>([
     "zero-downtime",
     "throughput",
@@ -20,24 +23,24 @@ export default function ProjectScopeEstimator() {
   });
 
   const archetypes = [
-    { id: "core", label: "Distributed Platform Core" },
-    { id: "legacy", label: "Legacy Monolith Decoupling" },
-    { id: "ops", label: "Internal Control Plane & Tooling" },
-    { id: "infra", label: "Cloud Infrastructure & SRE" },
+    { id: "custom-web-application", label: "Web Application & Portals" },
+    { id: "backend-api-development", label: "Backend Core & High-Throughput APIs" },
+    { id: "cloud-setup-deployment", label: "Cloud Infrastructure & SRE" },
+    { id: "legacy-system-refactoring", label: "Legacy Monolith Modernization" },
   ];
 
   const constraintsList = [
     { id: "zero-downtime", label: "Zero Downtime Cutover Required" },
     { id: "throughput", label: "Peak Concurrency > 10k req/s" },
-    { id: "compliance", label: "SOC2 / Financial / HIPAA Audit" },
+    { id: "compliance", label: "SOC2 / HIPAA / Financial Audit" },
     { id: "latency", label: "P99 Latency Budget < 50ms" },
     { id: "database", label: "Complex Database Schema Migration" },
   ];
 
   const timelines = [
-    { id: "urgent", label: "Urgent Sprint (4–8 Weeks)" },
+    { id: "urgent", label: "Urgent Sprint (2–6 Weeks)" },
     { id: "quarter", label: "Quarterly Dedicated Pod" },
-    { id: "multi-phase", label: "Multi-Phase Modernization" },
+    { id: "multi-phase", label: "Multi-Phase Platform Build" },
   ];
 
   const toggleConstraint = (id: string) => {
@@ -50,22 +53,44 @@ export default function ProjectScopeEstimator() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmissionRef(`VECTIS-SPEC-#${Math.floor(100000 + Math.random() * 900000)}`);
+    const ref = `VECTIS-SPEC-#${Math.floor(100000 + Math.random() * 900000)}`;
+    setSubmissionRef(ref);
+
+    const archLabel = archetypes.find((a) => a.id === selectedArchetype)?.label || selectedArchetype;
+    const timelineLabel = timelines.find((t) => t.id === selectedTimeline)?.label || selectedTimeline;
+    const constraintLabels = selectedConstraints.join(", ");
+
+    saveDemoBookingRequest({
+      serviceId: selectedArchetype,
+      serviceName: `Project Scope: ${archLabel}`,
+      pricingType: "custom_quote",
+      client: {
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+      },
+      project: {
+        description: `[Role: ${formData.role}] [Constraints: ${constraintLabels}] [Timeline: ${timelineLabel}]\n\n${formData.details}`,
+        timeline: timelineLabel,
+        budget: "Scoped by Architect",
+      },
+    });
+
     setIsSubmitted(true);
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-[#1f1f1f] text-[#ffffff] border-b border-[#333333] relative">
+    <section id="contact" className="py-24 md:py-32 bg-[#1f1f1f] text-[#ffffff] border-b border-[#333333] relative scroll-mt-20">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-[#333333]">
           <div>
             <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-4">
-              [ 08 // INITIATE TECHNICAL DISCOVERY ]
+              [ 07 // INITIATE TECHNICAL SCOPE &amp; DISCOVERY ]
             </div>
             <h2 className="type-heading font-medium tracking-tight text-[#ffffff]">
-              Start with an architectural scope,
+              Start with a structured scope,
               <span className="block italic text-[#808080] font-normal">not an ambiguous sales pitch.</span>
             </h2>
           </div>
@@ -93,7 +118,7 @@ export default function ProjectScopeEstimator() {
                       key={arch.id}
                       type="button"
                       onClick={() => setSelectedArchetype(arch.id)}
-                      className={`text-left p-4 font-mono text-[12px] transition-all border radius-container ${
+                      className={`text-left p-4 font-mono text-[12px] transition-all border radius-container cursor-pointer ${
                         isSelected
                           ? "bg-[#ffffff] text-[#000000] border-[#ffffff]"
                           : "bg-[#1f1f1f] border-[#333333] text-[#cccccc] hover:border-[#666666]"
@@ -122,7 +147,7 @@ export default function ProjectScopeEstimator() {
                       key={con.id}
                       type="button"
                       onClick={() => toggleConstraint(con.id)}
-                      className={`px-3.5 py-2 radius-button font-mono text-[11px] uppercase tracking-wider transition-all border ${
+                      className={`px-3.5 py-2 radius-button font-mono text-[11px] uppercase tracking-wider transition-all border cursor-pointer ${
                         isChecked
                           ? "bg-[#ffffff] text-[#000000] border-[#ffffff]"
                           : "bg-[#1f1f1f] border-[#333333] text-[#808080] hover:text-[#cccccc] hover:border-[#666666]"
@@ -149,7 +174,7 @@ export default function ProjectScopeEstimator() {
                       key={time.id}
                       type="button"
                       onClick={() => setSelectedTimeline(time.id)}
-                      className={`text-center p-3 font-mono text-[11px] uppercase tracking-wider transition-all border radius-button ${
+                      className={`text-center p-3 font-mono text-[11px] uppercase tracking-wider transition-all border radius-button cursor-pointer ${
                         isSelected
                           ? "bg-[#ffffff] text-[#000000] border-[#ffffff]"
                           : "bg-[#1f1f1f] border-[#333333] text-[#808080] hover:text-[#cccccc] hover:border-[#666666]"
@@ -185,8 +210,11 @@ export default function ProjectScopeEstimator() {
           <div className="lg:col-span-5 bg-[#141414] border border-[#333333] radius-container p-8 md:p-10">
             {isSubmitted ? (
               <div className="py-12 text-center space-y-6">
+                <div className="w-12 h-12 rounded-full border border-[#ffffff] flex items-center justify-center mx-auto text-[#ffffff]">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
                 <div className="font-mono text-[11px] uppercase tracking-widest text-[#808080]">
-                  [ DISPATCH LOGGED ]
+                  [ INTAKE DISPATCH LOGGED ]
                 </div>
                 <h3 className="type-subheading font-medium text-[#ffffff]">
                   Technical Discovery Initiated
@@ -194,8 +222,16 @@ export default function ProjectScopeEstimator() {
                 <p className="text-[13px] text-[#808080] max-w-xs mx-auto leading-relaxed">
                   Your architectural parameters have been submitted directly to our lead engineering review queue. A Principal Systems Architect will respond within 24 business hours.
                 </p>
-                <div className="pt-4 font-mono text-[10px] text-[#808080] tracking-widest uppercase">
+                <div className="p-3 bg-[#1f1f1f] rounded-[8px] border border-[#333333] font-mono text-[10px] text-[#ffffff] tracking-widest uppercase">
                   DISPATCH REF: {submissionRef}
+                </div>
+                <div className="pt-2">
+                  <Link
+                    href="/demo/bookings"
+                    className="font-mono text-[11px] text-[#808080] hover:text-[#ffffff] underline uppercase"
+                  >
+                    View in Demo Lead Ledger →
+                  </Link>
                 </div>
               </div>
             ) : (
@@ -273,7 +309,7 @@ export default function ProjectScopeEstimator() {
                   </label>
                   <textarea
                     rows={3}
-                    placeholder="Briefly describe the codebase, current database scale, or critical operational bottleneck..."
+                    placeholder="Briefly describe the product, current database scale, or critical operational goals..."
                     value={formData.details}
                     onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                     className="w-full p-4 bg-[#1f1f1f] border border-[#333333] radius-container text-[#ffffff] font-mono text-[12px] focus:outline-none focus:border-[#ffffff] resize-none"
@@ -286,11 +322,11 @@ export default function ProjectScopeEstimator() {
                   className="w-full h-12 radius-button bg-[#ffffff] hover:bg-[#e6e6e6] text-[#000000] font-mono text-[12px] uppercase tracking-widest font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Submit Technical Discovery Scope</span>
-                  <span>→</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
 
                 <div className="pt-2 text-[10px] font-mono text-[#808080] text-center uppercase tracking-wider">
-                  Direct inquiry: <a href="mailto:architecture@vectis-systems.io" className="text-[#ffffff] hover:underline">architecture@vectis-systems.io</a> • PGP Encrypted upon request
+                  Direct inquiry: <a href="mailto:architecture@vectis-systems.io" className="text-[#ffffff] hover:underline">architecture@vectis-systems.io</a> • NDA upon request
                 </div>
               </form>
             )}
@@ -302,4 +338,3 @@ export default function ProjectScopeEstimator() {
     </section>
   );
 }
-

@@ -13,9 +13,9 @@ export default function AgencyNav() {
 
   const navLinks = [
     { label: "SERVICES", href: "/services" },
-    { label: "WORK", href: "/#cases" },
-    { label: "APPROACH", href: "/#workflow" },
-    { label: "TAXONOMY", href: "/#taxonomy" },
+    { label: "WORK", href: "/#work" },
+    { label: "APPROACH", href: "/#approach" },
+    { label: "TECHNOLOGY", href: "/#technology" },
     { label: "ENGAGEMENT", href: "/#engagement" },
     { label: "PIPELINE", href: "/demo/bookings" },
   ];
@@ -60,9 +60,9 @@ export default function AgencyNav() {
             <button
               type="button"
               onClick={() => setBookingModalOpen(true)}
-              className="font-brand text-[11px] font-semibold tracking-[0.08em] uppercase text-[#000000] hover:text-[#666666] transition-colors flex items-center gap-1.5 focus:outline-none"
+              className="font-brand text-[11px] font-semibold tracking-[0.08em] uppercase text-[#000000] hover:text-[#666666] transition-colors flex items-center gap-1.5 focus:outline-none cursor-pointer"
             >
-              <span>Book a Service</span>
+              <span>Discuss a Project</span>
               <ArrowRight className="w-3 h-3" />
             </button>
           </div>

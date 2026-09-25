@@ -49,14 +49,15 @@ export default function Footer() {
           {/* Operational Links (2 cols) */}
           <div className="md:col-span-2 space-y-3">
             <span className="font-mono text-[10px] text-[#ffffff] uppercase tracking-wider block">
-              Monograph
+              Studio &amp; Approach
             </span>
             <ul className="space-y-2 text-[12px] text-[#808080] font-mono">
-              <li><Link href="/#problem" className="hover:text-[#ffffff] transition-colors">Problem Diagnosis</Link></li>
-              <li><Link href="/#workflow" className="hover:text-[#ffffff] transition-colors">Execution Pipeline</Link></li>
-              <li><Link href="/#cases" className="hover:text-[#ffffff] transition-colors">Selected Systems</Link></li>
+              <li><Link href="/#work" className="hover:text-[#ffffff] transition-colors">Selected Work</Link></li>
+              <li><Link href="/#approach" className="hover:text-[#ffffff] transition-colors">Our Standards</Link></li>
+              <li><Link href="/#technology" className="hover:text-[#ffffff] transition-colors">Technology Stack</Link></li>
               <li><Link href="/#engagement" className="hover:text-[#ffffff] transition-colors">Engagement Pods</Link></li>
-              <li><Link href="/demo/bookings" className="hover:text-[#ffffff] transition-colors">Demo Lead Ingest</Link></li>
+              <li><Link href="/#contact" className="hover:text-[#ffffff] transition-colors">Project Scoping</Link></li>
+              <li><Link href="/demo/bookings" className="hover:text-[#ffffff] transition-colors">Inbound Ledger</Link></li>
             </ul>
           </div>
 

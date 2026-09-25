@@ -1,60 +1,76 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import BookingModal from "./BookingModal";
 
 export default function EngagementModel() {
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [preselectedService, setPreselectedService] = useState("custom-web-application");
+
+  const handleOpenBooking = (serviceSlug: string) => {
+    setPreselectedService(serviceSlug);
+    setBookingModalOpen(true);
+  };
+
   const models = [
     {
-      archetype: "[ 01 // SURGICAL INTERVENTION ]",
-      name: "Architecture & Bottleneck Sprint",
-      timeline: "4 to 8 Weeks",
-      focus: "Targeted, high-velocity intervention to resolve critical production bottlenecks, database deadlocks, or scaling failure domains.",
-      podComposition: "1 Principal Architect + 1 Senior Systems Engineer",
+      archetype: "[ 01 // FIXED-PRICE PROJECT ]",
+      name: "Defined Scope Deliverable",
+      timeline: "2 to 8 Weeks",
+      serviceSlug: "custom-web-application",
+      focus: "Standalone web applications, mobile apps, API platforms, or cloud setups with locked scope, fixed milestones, and guaranteed delivery.",
+      podComposition: "1 Principal Architect + 1-2 Senior Engineers",
       scope: [
-        "In-depth query profiling & execution plan optimization",
-        "Isolation and eradication of connection pool starvation & memory leaks",
-        "Deterministic load benchmarking & failure boundary remediation",
-        "Operational post-mortem & automated verification runbooks",
+        "Formal requirements specification & data architecture blueprint",
+        "Continuous staging environments with weekly client review demos",
+        "Automated regression testing, CI/CD pipeline, and documentation",
+        "30-day post-launch bug-fix warranty & 100% IP repository transfer",
       ],
-      idealFor: "Teams facing immediate scaling limits or deployment deadlocks before launch.",
+      idealFor: "Businesses launching new products, redesigning portals, or migrating infrastructure.",
     },
     {
       archetype: "[ 02 // DEDICATED POD ]",
-      name: "Embedded Systems Engineering Pod",
-      timeline: "Quarterly Retainer (3–12 Months)",
-      focus: "Autonomous senior engineering pod integrated directly with your repository, issue tracker, and sprint rhythm.",
-      podComposition: "1 Technical Lead + 2 to 4 Senior Backend/Infra Engineers",
+      name: "Embedded Systems Retainer",
+      timeline: "Monthly Retainer (3–12 Months)",
+      serviceSlug: "application-maintenance",
+      focus: "Dedicated senior engineering team working directly in your GitHub repository, issue tracker, and sprint cadence.",
+      podComposition: "1 Technical Lead + 1 to 3 Senior Engineers",
       scope: [
-        "Continuous platform engineering & high-throughput feature shipping",
-        "Direct participation in architectural reviews & design documents",
-        "Comprehensive automated verification, CI/CD pipelines, and observability",
-        "Direct knowledge transfer to internal engineering staff",
+        "Continuous product feature velocity and technical debt elimination",
+        "Real-time architecture guidance and code reviews with your team",
+        "Continuous CI/CD management, database tuning, and dependency updates",
+        "Guaranteed response SLA with direct Slack/Teams engineer communication",
       ],
-      idealFor: "Companies needing senior engineering velocity without a 9-month hiring cycle.",
+      idealFor: "Companies needing senior engineering bandwidth without a 6-month recruitment cycle.",
     },
     {
-      archetype: "[ 03 // FULL MODERNIZATION ]",
-      name: "Legacy Monolith Decoupling & Cutover",
-      timeline: "Milestone-Governed (6–18 Months)",
-      focus: "Comprehensive replatforming of aging enterprise core software with contractual zero-downtime SLAs.",
-      podComposition: "Dedicated Cross-Functional Architecture & Infrastructure Pod",
+      archetype: "[ 03 // SURGICAL MODERNIZATION ]",
+      name: "Architecture & Bottleneck Sprint",
+      timeline: "3 to 6 Weeks",
+      serviceSlug: "legacy-system-refactoring",
+      focus: "Targeted, high-velocity intervention to resolve critical production bottlenecks, database deadlocks, or legacy monolith decoupling.",
+      podComposition: "1 Principal Architect + 1 Systems/Infra Specialist",
       scope: [
-        "End-to-end Strangler Fig facade and dynamic traffic routing",
-        "Change Data Capture (Debezium) real-time dual-write pipelines",
-        "Shadow traffic validation to guarantee 100% output parity",
-        "Automated canary cutover and formal decommissioning of legacy code",
+        "Deep query profiling, connection starvation diagnosis, and schema optimization",
+        "Zero-downtime cutover strategy and shadow traffic verification",
+        "Synthetic load testing under 3x expected peak concurrency",
+        "Operational runbooks and post-remediation architecture signoff",
       ],
-      idealFor: "Enterprises where legacy monolith risk has become an operational liability.",
+      idealFor: "Enterprises facing scaling ceilings, slow queries, or deployment risks before peak traffic.",
     },
   ];
 
   return (
-    <section id="engagement" className="py-24 md:py-32 bg-[#ffffff] text-[#000000] border-b border-[#e6e6e6]">
+    <section id="engagement" className="py-24 md:py-32 bg-[#ffffff] text-[#000000] border-b border-[#e6e6e6] scroll-mt-20">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-[#e6e6e6]">
           <div>
             <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-4">
-              [ 07 // ENGAGEMENT STRUCTURE ]
+              [ 06 // ENGAGEMENT STRUCTURE ]
             </div>
             <h2 className="type-heading font-medium tracking-tight text-[#000000]">
               Transparent engagement models.
@@ -62,7 +78,7 @@ export default function EngagementModel() {
             </h2>
           </div>
           <p className="mt-6 md:mt-0 text-[14px] text-[#666666] max-w-[340px] leading-relaxed">
-            Contracts structured strictly around verified technical milestones and engineering pod velocity, not open-ended advisory hours.
+            Contracts structured strictly around verified technical milestones and engineering velocity—never open-ended speculative hours.
           </p>
         </div>
 
@@ -116,21 +132,23 @@ export default function EngagementModel() {
                 </div>
               </div>
 
-              {/* Bottom context */}
+              {/* Bottom context & Action */}
               <div className="pt-6 border-t border-[#e6e6e6]">
                 <div className="font-mono text-[9px] uppercase tracking-wider text-[#808080] mb-1">
-                  RECOMMENDED CONTEXT
+                  RECOMMENDED FOR
                 </div>
                 <div className="text-[12px] text-[#666666] leading-relaxed mb-6">
                   {m.idealFor}
                 </div>
-                <Link
-                  href="/services"
-                  className="inline-flex items-center gap-1.5 text-[12px] font-mono uppercase tracking-wider text-[#000000] hover:underline"
+                
+                <button
+                  type="button"
+                  onClick={() => handleOpenBooking(m.serviceSlug)}
+                  className="w-full py-2.5 px-4 radius-button bg-[#000000] hover:bg-[#1f1f1f] text-[#ffffff] font-mono text-[11px] uppercase tracking-wider font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>Select Relevant Service</span>
-                  <span>→</span>
-                </Link>
+                  <span>Inquire / Book Model</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </div>
           ))}
@@ -139,19 +157,24 @@ export default function EngagementModel() {
         {/* IP and Contract Invariant */}
         <div className="mt-12 p-8 radius-container bg-[#f2f2f2] border border-[#e6e6e6] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 font-mono text-[11px]">
           <div className="text-[#333333] leading-relaxed max-w-[700px]">
-            <strong className="text-[#000000] tracking-wider uppercase">[ CONTRACT INVARIANT ]</strong> Fixed bi-weekly or monthly rates with zero hidden markups. 100% repository IP transferred with every automated Git push. Zero proprietary lock-in.
+            <strong className="text-[#000000] tracking-wider uppercase">[ CONTRACT INVARIANT ]</strong> Fixed milestone pricing with zero hidden charges. 100% repository IP transferred to your private Git repo with every automated push. Zero vendor lock-in.
           </div>
-          <a
-            href="#contact"
+          <Link
+            href="/services"
             className="type-action inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-widest text-[#000000] hover:underline shrink-0"
           >
-            <span>Request Pod Availability</span>
+            <span>View All Service Pricing</span>
             <span>→</span>
-          </a>
+          </Link>
         </div>
 
       </div>
+
+      <BookingModal
+        isOpen={bookingModalOpen}
+        onClose={() => setBookingModalOpen(false)}
+        preselectedServiceId={preselectedService}
+      />
     </section>
   );
 }
-
