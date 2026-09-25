@@ -21,7 +21,7 @@ export default function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column (7 cols): Proposition & Actions */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-full">
             <h1 className="type-display font-normal text-[#000000] tracking-[-0.035em]">
               We design, build and scale
               <span className="block italic text-[#808080] font-normal mt-1">
@@ -57,43 +57,6 @@ export default function HeroSection() {
               <span>✓ TRANSPARENT PRICING</span>
               <span>✓ 100% CODE OWNERSHIP</span>
               <span>✓ NO SALES INTERROGATIONS</span>
-            </div>
-          </div>
-
-          {/* Right Column (5 cols): Clean Service Menu Preview Plate */}
-          <div className="lg:col-span-5">
-            <div className="bg-[#f7f7f7] border border-[#e6e6e6] radius-container p-6 sm:p-7">
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#e6e6e6] font-mono text-[10px] uppercase tracking-wider text-[#808080]">
-                <span>AVAILABLE SERVICES MENU</span>
-                <span className="text-[#000000] font-medium">FIXED RATES</span>
-              </div>
-
-              <div className="divide-y divide-[#e6e6e6]">
-                {previewServices.map((svc, i) => (
-                  <a
-                    key={svc.id}
-                    href={`#services`}
-                    className="py-3.5 flex items-center justify-between text-xs group block hover:bg-[#efefef] px-2 rounded-[6px] transition-colors"
-                  >
-                    <div>
-                      <span className="font-mono text-[10px] text-[#808080] mr-2">0{i + 1}</span>
-                      <span className="font-medium text-[#000000] group-hover:underline">
-                        {svc.name}
-                      </span>
-                    </div>
-                    <span className="font-mono text-[11px] text-[#4d4d4d] shrink-0">
-                      {svc.price ? `From ${formatINR(svc.price)}` : svc.pricing.label}
-                    </span>
-                  </a>
-                ))}
-              </div>
-
-              <div className="mt-4 pt-4 border-t border-[#e6e6e6] flex items-center justify-between font-mono text-[10px] text-[#808080]">
-                <span>7 PACKAGES READY TO BOOK</span>
-                <a href="#services" className="text-[#000000] font-medium underline">
-                  VIEW FULL CATALOG →
-                </a>
-              </div>
             </div>
           </div>
 
