@@ -1,163 +1,132 @@
-import { ShieldCheck } from "lucide-react";
-
 export default function WorkflowSection() {
-  const steps = [
+  const sequence = [
     {
       step: "01",
-      name: "AUDIT & REVERSE-ENGINEERING",
-      objective: "Understand what exists, what is broken, and where production risk lives.",
+      name: "UNDERSTAND",
+      summary: "We define the problem, evaluate legacy codebases, and map architectural constraints.",
       actions: [
-        "Repository static analysis & circular dependency mapping",
-        "Slow query logging & database index profile extraction",
-        "Infrastructure vulnerability & deployment bottleneck discovery",
-        "Interviews with core engineers to uncover tribal workarounds",
+        "Static code analysis & dependency circularity extraction",
+        "Slow query profiling & connection starvation identification",
+        "Interviews with core engineering staff to uncover tribal workarounds",
       ],
-      deliverable: "System Reality Report + Critical Risk Vector Matrix",
+      output: "System Reality Report + Critical Risk Matrix",
     },
     {
       step: "02",
-      name: "CONSTRAINT & INVARIANT MODELING",
-      objective: "Establish mathematically defensible boundaries before writing code.",
+      name: "ARCHITECT",
+      summary: "We model invariants, data consistency boundaries, and formal API schemas.",
       actions: [
-        "Define hard operational SLAs: maximum acceptable P99 latency & RPO/RTO",
+        "P99 latency ceilings, max acceptable RPO/RTO thresholds defined",
         "Protobuf & OpenAPI schema contracts across all domain boundaries",
-        "Data consistency boundary modeling (ACID vs. Eventual Consistency)",
         "Zero-downtime cutover strategy and automated rollback criteria",
       ],
-      deliverable: "Formal Architecture Blueprint + Service Contract Specifications",
+      output: "Formal Architecture Blueprint + Service Contract Specifications",
     },
     {
       step: "03",
-      name: "PARALLEL ENGINE IMPLEMENTATION",
-      objective: "Construct the new architecture without disturbing existing revenue flow.",
+      name: "BUILD",
+      summary: "Design and engineering move together in parallel with existing revenue traffic.",
       actions: [
-        "Strangler Fig reverse proxy installation at the ingress edge",
-        "Clean domain-driven service implementation in Go / TypeScript",
-        "Change Data Capture (Debezium) for real-time dual-write data mirroring",
-        "Hermetic unit, property-based, and integration test suite development",
+        "Strangler Fig reverse proxy facade installation at edge ingress",
+        "Clean domain-driven service implementation in compiled Go or Node",
+        "Change Data Capture (Debezium) for real-time dual-write mirroring",
       ],
-      deliverable: "Fully Tested Service Modules + Continuous Delivery Pipelines",
+      output: "Hermetic Service Modules + Continuous Delivery Pipelines",
     },
     {
       step: "04",
-      name: "STRESS INJECTION & VERIFICATION",
-      objective: "Prove system durability under malicious and peak traffic conditions.",
+      name: "VERIFY",
+      summary: "Synthetic load generation and shadow traffic validate output parity.",
       actions: [
-        "Synthetic load generation at 3x expected peak concurrency",
-        "Chaos testing: simulated database failover and packet loss",
-        "Shadow traffic replay from live production to verify response parity",
-        "Static application security testing (SAST) and dependency auditing",
+        "Stress testing at 3x expected peak concurrency",
+        "Chaos drills: simulated database failover and packet drops",
+        "Shadow traffic replay from live production with zero client impact",
       ],
-      deliverable: "Verification Benchmark Reports + Chaos Recovery Runbooks",
+      output: "Benchmark Verification Report + Chaos Recovery Runbooks",
     },
     {
       step: "05",
-      name: "ZERO-DOWNTIME CANARY CUTOVER",
-      objective: "Execute phased production traffic shift with automated safety latches.",
+      name: "SHIP",
+      summary: "Canary traffic shift with automated health gates and instantaneous rollback.",
       actions: [
-        "Gradual canary traffic routing: 1% → 5% → 25% → 100%",
-        "Automated health gates monitoring error rates and P99 latency",
-        "Instant rollback trigger if error budget exceeds 0.01% during cutover",
-        "Decommissioning of legacy monolith routes and database schema cleanup",
+        "Phased canary traffic routing (1% → 5% → 25% → 100%)",
+        "Automated health gates monitoring error budgets and latency",
+        "Instant rollback trigger if error budget exceeds 0.01%",
       ],
-      deliverable: "Live Production Operation + 100% Repository IP Transfer",
+      output: "Live Production Operation + 100% Repository IP Transfer",
     },
   ];
 
   return (
-    <section id="workflow" className="py-24 md:py-32 bg-[#19191a] text-white border-b border-[#323234] relative">
-      <div className="absolute inset-0 pointer-events-none technical-grid opacity-40" aria-hidden="true" />
-
-      <div className="relative max-w-[1200px] mx-auto px-6">
+    <section id="workflow" className="py-24 md:py-32 bg-[#1f1f1f] text-[#ffffff] border-b border-[#333333]">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-[#323234]">
+        {/* Section Header */}
+        <div className="pb-8 mb-16 border-b border-[#333333] flex flex-col md:flex-row md:items-end justify-between">
           <div>
-            <div className="flex items-center gap-2 font-mono text-xs text-[#bfbec9] uppercase tracking-wider mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ff470a]" />
-              <span>03 / THE EXECUTION PIPELINE</span>
+            <div className="text-[11px] font-mono uppercase tracking-[0.15em] text-[#999999] mb-3">
+              03 / ENGINEERING METHODOLOGY
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-normal leading-[1.2] tracking-[-0.015em] font-display text-white">
-              Engineering with proof, <br className="hidden sm:inline" />
-              not hope.
+            <h2 className="type-heading font-normal text-[#ffffff] tracking-tight">
+              An architectural sequence <br className="hidden sm:inline" />
+              <span className="italic text-[#999999]">grounded in verification, not assumptions.</span>
             </h2>
           </div>
-          <p className="mt-4 md:mt-0 text-sm text-[#bfbec9] max-w-sm font-mono">
-            Every step produces measurable verification artifacts. We never cut over to new architecture based on assumptions.
-          </p>
+          <div className="mt-6 md:mt-0 font-mono text-xs text-[#999999] max-w-xs text-left md:text-right">
+            <span>DISASTER RECOVERY STANDARD: RPO ZERO LOSS</span>
+          </div>
         </div>
 
-        {/* Directed Editorial Sequence */}
-        <div className="space-y-6">
-          {steps.map((item, idx) => (
-            <div
-              key={item.step}
-              className="bg-[#222224] border border-[#323234] rounded-[16px] p-6 sm:p-8 transition-colors hover:border-[#464554]"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Directed Editorial Monograph Sequence (Section 37) */}
+        <div className="divide-y divide-[#333333] border-t border-b border-[#333333]">
+          {sequence.map((item) => (
+            <div key={item.step} className="py-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 
-                {/* Step number and title (4 cols) */}
+                {/* Step Marker & Title (4 cols) */}
                 <div className="lg:col-span-4">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="font-mono text-sm font-bold px-2 py-0.5 rounded bg-[#ff470a]/15 text-[#ff470a] border border-[#ff470a]/30">
-                      PHASE {item.step}
-                    </span>
-                    <span className="font-mono text-xs text-[#76757f]">GATE {idx + 1}/5</span>
+                  <div className="font-mono text-xs text-[#808080] mb-1">
+                    PHASE {item.step} {"//"} SEQUENCE
                   </div>
-                  <h3 className="text-xl font-display font-medium text-white mb-2">
+                  <h3 className="type-heading-sm font-medium text-[#ffffff] tracking-tight">
                     {item.name}
                   </h3>
-                  <p className="text-sm text-[#bfbec9] leading-relaxed">
-                    {item.objective}
+                  <p className="text-xs text-[#cccccc] max-w-sm mt-2 leading-relaxed">
+                    {item.summary}
                   </p>
                 </div>
 
                 {/* Specific actions (5 cols) */}
-                <div className="lg:col-span-5 bg-[#19191a] p-4 sm:p-5 rounded-[12px] border border-[#323234]">
-                  <span className="font-mono text-[11px] font-semibold text-[#76757f] uppercase tracking-wider block mb-3">
+                <div className="lg:col-span-5 space-y-2 font-mono text-xs">
+                  <span className="text-[10px] text-[#808080] uppercase tracking-wider block mb-2">
                     Verification Milestones
                   </span>
                   <ul className="space-y-2">
                     {item.actions.map((act, i) => (
-                      <li key={i} className="text-xs text-[#bfbec9] flex items-start gap-2">
-                        <span className="text-[#ff470a] font-mono text-[10px] mt-0.5">›</span>
+                      <li key={i} className="text-[#cccccc] text-[12px] flex items-start gap-2">
+                        <span className="text-[#808080]">›</span>
                         <span>{act}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Formal deliverable (3 cols) */}
-                <div className="lg:col-span-3 flex flex-col justify-between h-full bg-[#19191a]/40 p-4 sm:p-5 rounded-[12px] border border-[#323234]">
-                  <div>
-                    <span className="font-mono text-[10px] uppercase text-[#ff470a] tracking-wider block mb-1">
-                      Hard Deliverable
-                    </span>
-                    <div className="text-xs text-white font-medium">
-                      {item.deliverable}
-                    </div>
+                {/* Formal Deliverable (3 cols) */}
+                <div className="lg:col-span-3 bg-[#000000] p-5 rounded-[12px] border border-[#333333] font-mono text-xs">
+                  <span className="text-[10px] text-[#808080] uppercase block mb-1">
+                    Definitive Artifact
+                  </span>
+                  <div className="text-[#ffffff] font-medium text-[11px] leading-snug">
+                    {item.output}
                   </div>
-
-                  <div className="mt-4 pt-3 border-t border-[#323234] flex items-center gap-2 text-[11px] font-mono text-[#76757f]">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Automated Verification Gate</span>
+                  <div className="mt-4 pt-2 border-t border-[#1f1f1f] text-[10px] text-[#808080]">
+                    GATE STATUS: VERIFIED
                   </div>
                 </div>
 
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Operating policy quote */}
-        <div className="mt-12 p-6 rounded-[16px] bg-[#222224] border border-[#323234] flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="font-mono text-xs text-[#bfbec9]">
-            <span className="text-white font-semibold">OUR DEPLOYMENT INVARIANT:</span>{" "}
-            No code touches production without automated shadow-traffic parity validation and sub-second rollback triggers.
-          </div>
-          <span className="font-mono text-[11px] text-[#ff470a] shrink-0 border border-[#ff470a]/30 px-3 py-1 rounded-full bg-[#ff470a]/10">
-            SLA: ZERO UNPLANNED OUTAGE
-          </span>
         </div>
 
       </div>

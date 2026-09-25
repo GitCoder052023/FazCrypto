@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Check } from "lucide-react";
 
 export default function ProjectScopeEstimator() {
   const [selectedArchetype, setSelectedArchetype] = useState<string>("core");
@@ -30,7 +29,7 @@ export default function ProjectScopeEstimator() {
   const constraintsList = [
     { id: "zero-downtime", label: "Zero Downtime Cutover Required" },
     { id: "throughput", label: "Peak Concurrency > 10k req/s" },
-    { id: "compliance", label: "HIPAA / SOC2 / Financial Audit" },
+    { id: "compliance", label: "SOC2 / Financial / HIPAA Audit" },
     { id: "latency", label: "P99 Latency Budget < 50ms" },
     { id: "database", label: "Complex Database Schema Migration" },
   ];
@@ -51,73 +50,71 @@ export default function ProjectScopeEstimator() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmissionRef(`VECTIS-SCOPE-#${Math.floor(100000 + Math.random() * 900000)}`);
+    setSubmissionRef(`VECTIS-SPEC-#${Math.floor(100000 + Math.random() * 900000)}`);
     setIsSubmitted(true);
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-[#19191a] text-white relative">
-      <div className="absolute inset-0 pointer-events-none technical-grid opacity-30" aria-hidden="true" />
-
-      <div className="relative max-w-[1200px] mx-auto px-6">
+    <section id="contact" className="py-24 md:py-32 bg-[#1f1f1f] text-[#ffffff] border-b border-[#333333] relative">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-[#323234]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-[#333333]">
           <div>
-            <div className="flex items-center gap-2 font-mono text-xs text-[#bfbec9] uppercase tracking-wider mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ff470a]" />
-              <span>08 / INITIATE ENGAGEMENT</span>
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-4">
+              [ 08 // INITIATE TECHNICAL DISCOVERY ]
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-normal leading-[1.2] tracking-[-0.015em] font-display text-white">
-              Start with an architectural scope, <br className="hidden sm:inline" />
-              not a sales pitch.
+            <h2 className="type-heading font-medium tracking-tight text-[#ffffff]">
+              Start with an architectural scope,
+              <span className="block italic text-[#808080] font-normal">not an ambiguous sales pitch.</span>
             </h2>
           </div>
-          <p className="mt-4 md:mt-0 text-sm text-[#bfbec9] max-w-sm font-mono">
-            Every inquiry is routed directly to a Principal Systems Architect. We evaluate repository constraints and technical feasibility before any contract discussion.
+          <p className="mt-6 md:mt-0 text-[14px] text-[#808080] max-w-[340px] leading-relaxed">
+            Every submission is routed directly to a Principal Systems Architect. We evaluate repository boundaries and technical constraints prior to any commercial discussion.
           </p>
         </div>
 
         {/* Scoping Interface */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Left Column: Scope Parameter Configurator (7 cols) */}
-          <div className="lg:col-span-7 bg-[#222224] border border-[#323234] rounded-[16px] p-6 sm:p-8 space-y-8">
+          <div className="lg:col-span-7 bg-[#141414] border border-[#333333] radius-container p-8 md:p-10 space-y-10">
             
             {/* Step 1: Archetype */}
             <div>
-              <span className="font-mono text-xs font-semibold text-[#ff470a] uppercase tracking-wider block mb-3">
+              <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#808080] mb-4">
                 01 // SELECT SYSTEM ARCHETYPE
-              </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {archetypes.map((arch) => (
-                  <button
-                    key={arch.id}
-                    type="button"
-                    onClick={() => setSelectedArchetype(arch.id)}
-                    className={`text-left p-3.5 rounded-[8px] font-mono text-xs transition-all border ${
-                      selectedArchetype === arch.id
-                        ? "bg-[#ff470a]/15 border-[#ff470a] text-white"
-                        : "bg-[#19191a] border-[#323234] text-[#bfbec9] hover:border-[#464554]"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span>{arch.label}</span>
-                      {selectedArchetype === arch.id && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#ff470a]" />
-                      )}
-                    </div>
-                  </button>
-                ))}
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {archetypes.map((arch) => {
+                  const isSelected = selectedArchetype === arch.id;
+                  return (
+                    <button
+                      key={arch.id}
+                      type="button"
+                      onClick={() => setSelectedArchetype(arch.id)}
+                      className={`text-left p-4 font-mono text-[12px] transition-all border radius-container ${
+                        isSelected
+                          ? "bg-[#ffffff] text-[#000000] border-[#ffffff]"
+                          : "bg-[#1f1f1f] border-[#333333] text-[#cccccc] hover:border-[#666666]"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span>{arch.label}</span>
+                        <span className="text-[10px]">{isSelected ? "●" : "○"}</span>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             {/* Step 2: Constraints */}
             <div>
-              <span className="font-mono text-xs font-semibold text-[#ff470a] uppercase tracking-wider block mb-3">
+              <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#808080] mb-4">
                 02 // CRITICAL SYSTEM CONSTRAINTS
-              </span>
-              <div className="flex flex-wrap gap-2">
+              </div>
+              <div className="flex flex-wrap gap-2.5">
                 {constraintsList.map((con) => {
                   const isChecked = selectedConstraints.includes(con.id);
                   return (
@@ -125,13 +122,13 @@ export default function ProjectScopeEstimator() {
                       key={con.id}
                       type="button"
                       onClick={() => toggleConstraint(con.id)}
-                      className={`px-3 py-2 rounded-[6px] font-mono text-xs transition-all border ${
+                      className={`px-3.5 py-2 radius-button font-mono text-[11px] uppercase tracking-wider transition-all border ${
                         isChecked
-                          ? "bg-[#ff470a]/20 border-[#ff470a] text-white"
-                          : "bg-[#19191a] border-[#323234] text-[#bfbec9] hover:border-[#464554]"
+                          ? "bg-[#ffffff] text-[#000000] border-[#ffffff]"
+                          : "bg-[#1f1f1f] border-[#333333] text-[#808080] hover:text-[#cccccc] hover:border-[#666666]"
                       }`}
                     >
-                      <span className="mr-1.5">{isChecked ? "✓" : "+"}</span>
+                      <span className="mr-2">{isChecked ? "[x]" : "[+]"}</span>
                       {con.label}
                     </button>
                   );
@@ -141,77 +138,80 @@ export default function ProjectScopeEstimator() {
 
             {/* Step 3: Timeline */}
             <div>
-              <span className="font-mono text-xs font-semibold text-[#ff470a] uppercase tracking-wider block mb-3">
+              <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#808080] mb-4">
                 03 // ESTIMATED HORIZON
-              </span>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                {timelines.map((time) => (
-                  <button
-                    key={time.id}
-                    type="button"
-                    onClick={() => setSelectedTimeline(time.id)}
-                    className={`text-center p-3 rounded-[8px] font-mono text-xs transition-all border ${
-                      selectedTimeline === time.id
-                        ? "bg-[#ff470a]/15 border-[#ff470a] text-white"
-                        : "bg-[#19191a] border-[#323234] text-[#bfbec9] hover:border-[#464554]"
-                    }`}
-                  >
-                    {time.label}
-                  </button>
-                ))}
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {timelines.map((time) => {
+                  const isSelected = selectedTimeline === time.id;
+                  return (
+                    <button
+                      key={time.id}
+                      type="button"
+                      onClick={() => setSelectedTimeline(time.id)}
+                      className={`text-center p-3 font-mono text-[11px] uppercase tracking-wider transition-all border radius-button ${
+                        isSelected
+                          ? "bg-[#ffffff] text-[#000000] border-[#ffffff]"
+                          : "bg-[#1f1f1f] border-[#333333] text-[#808080] hover:text-[#cccccc] hover:border-[#666666]"
+                      }`}
+                    >
+                      {time.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             {/* Live Scope Summary Box */}
-            <div className="p-4 rounded-[8px] bg-[#19191a] border border-[#323234] font-mono text-xs text-[#bfbec9]">
-              <div className="text-[10px] uppercase text-[#76757f] mb-1.5 flex items-center justify-between">
-                <span>ENGINEERING PARAMETER SUMMARY</span>
-                <span className="text-emerald-400">STATUS: READY FOR DISCOVERY</span>
+            <div className="p-5 bg-[#1f1f1f] border border-[#333333] radius-container font-mono text-[11px] text-[#808080]">
+              <div className="text-[9px] uppercase tracking-widest text-[#808080] mb-2 flex items-center justify-between pb-2 border-b border-[#333333]">
+                <span>ARCHITECTURAL PARAMETER SUMMARY</span>
+                <span className="text-[#ffffff]">[ STATUS: READY FOR INTAKE ]</span>
               </div>
-              <div className="text-white">
-                &gt; Scope: <span className="text-[#ff470a]">{archetypes.find((a) => a.id === selectedArchetype)?.label}</span>
+              <div className="text-[#ffffff]">
+                &gt; Scope: {archetypes.find((a) => a.id === selectedArchetype)?.label}
               </div>
-              <div className="text-[11px] text-[#bfbec9] mt-1">
-                &gt; Constraints: {selectedConstraints.length} active parameters ({selectedConstraints.join(", ")})
+              <div className="text-[#cccccc] mt-1">
+                &gt; Constraints: {selectedConstraints.length} active constraints ({selectedConstraints.join(", ")})
               </div>
-              <div className="text-[11px] text-[#bfbec9] mt-0.5">
-                &gt; Target: {timelines.find((t) => t.id === selectedTimeline)?.label}
+              <div className="text-[#808080] mt-1">
+                &gt; Target Horizon: {timelines.find((t) => t.id === selectedTimeline)?.label}
               </div>
             </div>
 
           </div>
 
           {/* Right Column: Submission Form (5 cols) */}
-          <div className="lg:col-span-5 bg-[#222224] border border-[#323234] rounded-[16px] p-6 sm:p-8">
+          <div className="lg:col-span-5 bg-[#141414] border border-[#333333] radius-container p-8 md:p-10">
             {isSubmitted ? (
-              <div className="py-12 text-center space-y-4">
-                <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto">
-                  <Check className="w-6 h-6" />
+              <div className="py-12 text-center space-y-6">
+                <div className="font-mono text-[11px] uppercase tracking-widest text-[#808080]">
+                  [ DISPATCH LOGGED ]
                 </div>
-                <h3 className="text-xl font-display font-medium text-white">
+                <h3 className="type-subheading font-medium text-[#ffffff]">
                   Technical Discovery Initiated
                 </h3>
-                <p className="text-xs text-[#bfbec9] max-w-xs mx-auto leading-relaxed">
-                  Your architectural parameters have been submitted directly to our lead engineering review queue. A principal systems architect will respond within 24 business hours.
+                <p className="text-[13px] text-[#808080] max-w-xs mx-auto leading-relaxed">
+                  Your architectural parameters have been submitted directly to our lead engineering review queue. A Principal Systems Architect will respond within 24 business hours.
                 </p>
-                <div className="pt-4 font-mono text-[11px] text-[#76757f]">
+                <div className="pt-4 font-mono text-[10px] text-[#808080] tracking-widest uppercase">
                   DISPATCH REF: {submissionRef}
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <span className="font-mono text-xs font-semibold text-white uppercase tracking-wider block mb-1">
-                    Direct Inquiry Form
-                  </span>
-                  <p className="text-xs text-[#bfbec9] mb-4">
-                    Send us your project context. We execute standard NDAs prior to reviewing private repositories or system architecture docs.
+                  <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#ffffff] mb-1">
+                    DIRECT INTAKE FORM
+                  </div>
+                  <p className="text-[13px] text-[#808080] mb-6 leading-relaxed">
+                    Provide system context. We execute mutual non-disclosure agreements prior to inspecting private repositories or internal topology.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-mono text-[10px] text-[#bfbec9] uppercase mb-1">
+                    <label className="block font-mono text-[9px] uppercase tracking-wider text-[#808080] mb-2">
                       Full Name *
                     </label>
                     <input
@@ -220,12 +220,12 @@ export default function ProjectScopeEstimator() {
                       placeholder="e.g. Alex Vance"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full h-11 px-3.5 bg-[#19191a] border border-[#464554] rounded-[6px] text-white text-xs focus:outline-none focus:border-[#ff470a] focus:ring-1 focus:ring-[#ff470a]"
+                      className="w-full h-11 px-4 bg-[#1f1f1f] border border-[#333333] radius-container text-[#ffffff] font-mono text-[12px] focus:outline-none focus:border-[#ffffff]"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-mono text-[10px] text-[#bfbec9] uppercase mb-1">
+                    <label className="block font-mono text-[9px] uppercase tracking-wider text-[#808080] mb-2">
                       Role / Title *
                     </label>
                     <input
@@ -234,13 +234,13 @@ export default function ProjectScopeEstimator() {
                       placeholder="e.g. CTO / VP Eng"
                       value={formData.role}
                       onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                      className="w-full h-11 px-3.5 bg-[#19191a] border border-[#464554] rounded-[6px] text-white text-xs focus:outline-none focus:border-[#ff470a] focus:ring-1 focus:ring-[#ff470a]"
+                      className="w-full h-11 px-4 bg-[#1f1f1f] border border-[#333333] radius-container text-[#ffffff] font-mono text-[12px] focus:outline-none focus:border-[#ffffff]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-mono text-[10px] text-[#bfbec9] uppercase mb-1">
+                  <label className="block font-mono text-[9px] uppercase tracking-wider text-[#808080] mb-2">
                     Corporate Email *
                   </label>
                   <input
@@ -249,12 +249,12 @@ export default function ProjectScopeEstimator() {
                     placeholder="alex@enterprise.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full h-11 px-3.5 bg-[#19191a] border border-[#464554] rounded-[6px] text-white text-xs focus:outline-none focus:border-[#ff470a] focus:ring-1 focus:ring-[#ff470a]"
+                    className="w-full h-11 px-4 bg-[#1f1f1f] border border-[#333333] radius-container text-[#ffffff] font-mono text-[12px] focus:outline-none focus:border-[#ffffff]"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-mono text-[10px] text-[#bfbec9] uppercase mb-1">
+                  <label className="block font-mono text-[9px] uppercase tracking-wider text-[#808080] mb-2">
                     Company / Organization *
                   </label>
                   <input
@@ -263,34 +263,34 @@ export default function ProjectScopeEstimator() {
                     placeholder="e.g. Meridian Freight Inc."
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full h-11 px-3.5 bg-[#19191a] border border-[#464554] rounded-[6px] text-white text-xs focus:outline-none focus:border-[#ff470a] focus:ring-1 focus:ring-[#ff470a]"
+                    className="w-full h-11 px-4 bg-[#1f1f1f] border border-[#333333] radius-container text-[#ffffff] font-mono text-[12px] focus:outline-none focus:border-[#ffffff]"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-mono text-[10px] text-[#bfbec9] uppercase mb-1">
+                  <label className="block font-mono text-[9px] uppercase tracking-wider text-[#808080] mb-2">
                     System Context / Core Challenge
                   </label>
                   <textarea
                     rows={3}
-                    placeholder="Briefly describe the current codebase, database scale, or operational bottleneck..."
+                    placeholder="Briefly describe the codebase, current database scale, or critical operational bottleneck..."
                     value={formData.details}
                     onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                    className="w-full p-3 bg-[#19191a] border border-[#464554] rounded-[6px] text-white text-xs focus:outline-none focus:border-[#ff470a] focus:ring-1 focus:ring-[#ff470a] resize-none"
+                    className="w-full p-4 bg-[#1f1f1f] border border-[#333333] radius-container text-[#ffffff] font-mono text-[12px] focus:outline-none focus:border-[#ffffff] resize-none"
                   />
                 </div>
 
-                {/* Primary CTA button strictly adhering to DESIGN.md */}
+                {/* Primary Action Button */}
                 <button
                   type="submit"
-                  className="w-full h-12 px-6 rounded-full bg-[#ff470a] hover:bg-[#ff561d] text-white text-sm font-medium transition-colors flex items-center justify-center gap-2 shadow-[0_4px_8px_rgba(0,0,0,0.2)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff470a]"
+                  className="w-full h-12 radius-button bg-[#ffffff] hover:bg-[#e6e6e6] text-[#000000] font-mono text-[12px] uppercase tracking-widest font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Submit Technical Discovery Scope</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>→</span>
                 </button>
 
-                <div className="pt-2 text-[10px] font-mono text-[#76757f] text-center">
-                  Direct contact: <a href="mailto:architecture@vectis-systems.io" className="text-[#bfbec9] hover:underline">architecture@vectis-systems.io</a> • PGP Encrypted upon request
+                <div className="pt-2 text-[10px] font-mono text-[#808080] text-center uppercase tracking-wider">
+                  Direct inquiry: <a href="mailto:architecture@vectis-systems.io" className="text-[#ffffff] hover:underline">architecture@vectis-systems.io</a> • PGP Encrypted upon request
                 </div>
               </form>
             )}
@@ -302,3 +302,4 @@ export default function ProjectScopeEstimator() {
     </section>
   );
 }
+

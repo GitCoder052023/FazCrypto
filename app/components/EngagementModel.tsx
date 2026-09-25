@@ -1,140 +1,152 @@
-import { ArrowRight, Clock, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
 export default function EngagementModel() {
   const models = [
     {
-      archetype: "01 // SURGICAL INTERVENTION",
+      archetype: "[ 01 // SURGICAL INTERVENTION ]",
       name: "Architecture & Bottleneck Sprint",
       timeline: "4 to 8 Weeks",
-      focus: "Rapid, targeted intervention to resolve a critical production blocker, database deadlock, or scaling crisis.",
+      focus: "Targeted, high-velocity intervention to resolve critical production bottlenecks, database deadlocks, or scaling failure domains.",
       podComposition: "1 Principal Architect + 1 Senior Systems Engineer",
       scope: [
         "In-depth query profiling & execution plan optimization",
-        "Isolation & eradication of memory leaks and connection starvation",
-        "Load testing and failure domain boundary remediation",
-        "Detailed post-mortem & ongoing preventive runbook",
+        "Isolation and eradication of connection pool starvation & memory leaks",
+        "Deterministic load benchmarking & failure boundary remediation",
+        "Operational post-mortem & automated verification runbooks",
       ],
-      idealFor: "Teams facing an immediate scaling wall or critical deployment deadlock.",
+      idealFor: "Teams facing immediate scaling limits or deployment deadlocks before launch.",
     },
     {
-      archetype: "02 // DEDICATED POD",
+      archetype: "[ 02 // DEDICATED POD ]",
       name: "Embedded Systems Engineering Pod",
       timeline: "Quarterly Retainer (3–12 Months)",
       focus: "Autonomous senior engineering pod integrated directly with your repository, issue tracker, and sprint rhythm.",
       podComposition: "1 Technical Lead + 2 to 4 Senior Backend/Infra Engineers",
       scope: [
         "Continuous platform engineering & high-throughput feature shipping",
-        "Direct participation in architecture reviews and sprint planning",
-        "Full test automation, CI/CD pipeline management, and monitoring",
-        "Seamless knowledge transfer to internal engineering staff",
+        "Direct participation in architectural reviews & design documents",
+        "Comprehensive automated verification, CI/CD pipelines, and observability",
+        "Direct knowledge transfer to internal engineering staff",
       ],
-      idealFor: "Companies needing senior engineering horsepower without a 9-month hiring cycle.",
+      idealFor: "Companies needing senior engineering velocity without a 9-month hiring cycle.",
     },
     {
-      archetype: "03 // FULL MODERNIZATION",
+      archetype: "[ 03 // FULL MODERNIZATION ]",
       name: "Legacy Monolith Decoupling & Cutover",
       timeline: "Milestone-Governed (6–18 Months)",
       focus: "Comprehensive replatforming of aging enterprise core software with contractual zero-downtime SLAs.",
       podComposition: "Dedicated Cross-Functional Architecture & Infrastructure Pod",
       scope: [
-        "End-to-end Strangler Fig implementation and facade routing",
+        "End-to-end Strangler Fig facade and dynamic traffic routing",
         "Change Data Capture (Debezium) real-time dual-write pipelines",
         "Shadow traffic validation to guarantee 100% output parity",
         "Automated canary cutover and formal decommissioning of legacy code",
       ],
-      idealFor: "Enterprises where legacy monolith risk has become an existential business liability.",
+      idealFor: "Enterprises where legacy monolith risk has become an operational liability.",
     },
   ];
 
   return (
-    <section id="engagement" className="py-24 md:py-32 bg-white text-[#19191a] border-b border-[#ededed]">
-      <div className="max-w-[1200px] mx-auto px-6">
+    <section id="engagement" className="py-24 md:py-32 bg-[#ffffff] text-[#000000] border-b border-[#e6e6e6]">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-[#ededed]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-[#e6e6e6]">
           <div>
-            <div className="flex items-center gap-2 font-mono text-xs text-[#76757f] uppercase tracking-wider mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ff470a]" />
-              <span>07 / ENGAGEMENT STRUCTURE</span>
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-4">
+              [ 07 // ENGAGEMENT STRUCTURE ]
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-normal leading-[1.2] tracking-[-0.015em] font-display">
-              Transparent engagement models. <br className="hidden sm:inline" />
-              Zero vague billing.
+            <h2 className="type-heading font-medium tracking-tight text-[#000000]">
+              Transparent engagement models.
+              <span className="block italic text-[#808080] font-normal">Zero ambiguous billing.</span>
             </h2>
           </div>
-          <p className="mt-4 md:mt-0 text-sm text-[#76757f] max-w-sm font-mono">
-            We structure contracts around verified technical milestones and engineering pod velocity, not open-ended advisory hours.
+          <p className="mt-6 md:mt-0 text-[14px] text-[#666666] max-w-[340px] leading-relaxed">
+            Contracts structured strictly around verified technical milestones and engineering pod velocity, not open-ended advisory hours.
           </p>
         </div>
 
-        {/* 3 Structured Engagement Models (Editorial Columns with Distinct Content) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {models.map((m) => (
+        {/* 3 Structured Engagement Columns */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border-t border-b border-[#e6e6e6]">
+          {models.map((m, idx) => (
             <div
               key={m.name}
-              className="p-7 rounded-[16px] border border-[#e0e0e0] bg-[#fafafa] flex flex-col justify-between hover:border-[#bfbec9] transition-all"
+              className={`p-8 lg:p-10 flex flex-col justify-between ${
+                idx !== 0 ? "border-t lg:border-t-0 lg:border-l border-[#e6e6e6]" : ""
+              }`}
             >
               <div>
                 {/* Header info */}
-                <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#e0e0e0] font-mono text-xs">
-                  <span className="text-[#ff470a] font-semibold">{m.archetype}</span>
-                  <span className="text-[#76757f] flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5" />
-                    {m.timeline}
-                  </span>
+                <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#e6e6e6] font-mono text-[10px] uppercase tracking-wider text-[#808080]">
+                  <span className="text-[#000000] font-medium">{m.archetype}</span>
+                  <span>{m.timeline}</span>
                 </div>
 
-                <h3 className="text-xl font-display font-medium text-[#19191a] mb-2 leading-snug">
+                <h3 className="type-subheading font-medium text-[#000000] mb-3 leading-snug">
                   {m.name}
                 </h3>
                 
-                <p className="text-xs text-[#464554] mb-6 leading-relaxed">
+                <p className="text-[13px] text-[#666666] mb-8 leading-relaxed">
                   {m.focus}
                 </p>
 
-                {/* Team composition badge */}
-                <div className="mb-6 p-3 rounded-[8px] bg-white border border-[#e0e0e0] font-mono text-[11px] text-[#323234]">
-                  <span className="text-[#76757f] block uppercase text-[10px] mb-0.5">Pod Allocation</span>
-                  <span className="font-semibold text-[#19191a]">{m.podComposition}</span>
+                {/* Team composition box */}
+                <div className="mb-8 p-4 bg-[#f2f2f2] border border-[#e6e6e6] radius-container font-mono text-[11px]">
+                  <span className="text-[#808080] block uppercase text-[9px] tracking-wider mb-1">
+                    POD ALLOCATION
+                  </span>
+                  <span className="text-[#000000] font-medium leading-relaxed block">
+                    {m.podComposition}
+                  </span>
                 </div>
 
                 {/* Scope items */}
-                <div className="space-y-2.5 mb-6">
-                  <span className="font-mono text-[11px] font-semibold text-[#76757f] uppercase tracking-wider block">
-                    Key Deliverables
+                <div className="space-y-3 mb-8">
+                  <span className="font-mono text-[10px] text-[#808080] uppercase tracking-wider block">
+                    KEY DELIVERABLES
                   </span>
-                  {m.scope.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-[#464554]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ff470a] mt-1.5 shrink-0" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
+                  <ul className="space-y-2.5">
+                    {m.scope.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-[13px] text-[#333333] leading-snug">
+                        <span className="text-[#808080] font-mono text-[11px] shrink-0 mt-0.5">—</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 
               {/* Bottom context */}
-              <div className="pt-4 border-t border-[#e0e0e0] font-mono text-[11px]">
-                <span className="text-[#76757f] block uppercase text-[10px] mb-0.5">Recommended Context</span>
-                <span className="text-[#323234]">{m.idealFor}</span>
+              <div className="pt-6 border-t border-[#e6e6e6]">
+                <div className="font-mono text-[9px] uppercase tracking-wider text-[#808080] mb-1">
+                  RECOMMENDED CONTEXT
+                </div>
+                <div className="text-[12px] text-[#666666] leading-relaxed mb-6">
+                  {m.idealFor}
+                </div>
+                <Link
+                  href="/services"
+                  className="inline-flex items-center gap-1.5 text-[12px] font-mono uppercase tracking-wider text-[#000000] hover:underline"
+                >
+                  <span>Select Relevant Service</span>
+                  <span>→</span>
+                </Link>
               </div>
             </div>
           ))}
         </div>
 
         {/* IP and Contract Invariant */}
-        <div className="mt-12 p-6 rounded-[16px] bg-[#f5f5f6] border border-[#e0e0e0] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
-          <div className="flex items-center gap-3 text-[#323234]">
-            <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-            <span>
-              <strong>CONTRACT INVARIANT:</strong> Fixed bi-weekly or monthly rates with zero hidden markups. 100% code IP transferred with every Git push.
-            </span>
+        <div className="mt-12 p-8 radius-container bg-[#f2f2f2] border border-[#e6e6e6] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 font-mono text-[11px]">
+          <div className="text-[#333333] leading-relaxed max-w-[700px]">
+            <strong className="text-[#000000] tracking-wider uppercase">[ CONTRACT INVARIANT ]</strong> Fixed bi-weekly or monthly rates with zero hidden markups. 100% repository IP transferred with every automated Git push. Zero proprietary lock-in.
           </div>
           <a
             href="#contact"
-            className="text-[#ff470a] font-semibold hover:underline flex items-center gap-1 shrink-0"
+            className="type-action inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-widest text-[#000000] hover:underline shrink-0"
           >
             <span>Request Pod Availability</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>→</span>
           </a>
         </div>
 
@@ -142,3 +154,4 @@ export default function EngagementModel() {
     </section>
   );
 }
+

@@ -1,258 +1,196 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-interface TopologyNode {
+interface SpecNode {
   id: string;
   name: string;
-  role: string;
-  protocol: string;
-  sla: string;
-  failover: string;
-  throughput: string;
+  domain: string;
+  spec: string;
+  guarantee: string;
 }
 
-const TOPOLOGY_NODES: TopologyNode[] = [
+const SPEC_NODES: SpecNode[] = [
   {
-    id: "edge",
-    name: "01 / Ingress & Edge Gateway",
-    role: "Envoy / Cloudflare edge routing, mTLS termination, rate limiting & token verification",
-    protocol: "HTTP/3 • gRPC-Web • TLS 1.3",
-    sla: "P99 < 3.2ms overhead",
-    failover: "Anycast BGP automatic rerouting",
-    throughput: "120,000 req/sec peak rated",
+    id: "ingress",
+    name: "01 / INGRESS MESH",
+    domain: "Edge Routing & Envoy TLS 1.3 Termination",
+    spec: "Anycast BGP routing with automated rate-limiting & token validation.",
+    guarantee: "P99 < 3.2ms overhead • Zero unmonitored routes",
   },
   {
-    id: "core",
-    name: "02 / Distributed Service Mesh",
-    role: "Domain-decoupled Go & TypeScript micro-engines with strict interface boundaries",
-    protocol: "Internal gRPC / Protobuf v3",
-    sla: "P99 < 18ms execution",
-    failover: "Active-active multi-zone pods",
-    throughput: "Horizontal autoscale (1-100 pods)",
+    id: "services",
+    name: "02 / DISTRIBUTED CORE",
+    domain: "Compiled Go & Node Service Pods",
+    spec: "Strict domain boundaries with Protobuf v3 inter-service contracts.",
+    guarantee: "Deterministic memory profile • Horizontal autoscale",
   },
   {
-    id: "events",
-    name: "03 / Event Bus & Outbox",
-    role: "Partitioned Kafka event stream ensuring idempotent async processing & zero message loss",
-    protocol: "Kafka Protocol / Avro Schema Registry",
-    sla: "Zero data loss (acks=all)",
-    failover: "3-node ZK/KRaft quorum replication",
-    throughput: "45,000 msgs/sec guaranteed",
+    id: "outbox",
+    name: "03 / EVENT TRANSACTION BUS",
+    domain: "Partitioned Kafka & Transactional Outbox",
+    spec: "Append-only event journal ensuring idempotent processing across boundaries.",
+    guarantee: "Zero message loss (acks=all) • Sub-second replay",
   },
   {
-    id: "data",
-    name: "04 / Partitioned Data Tier",
-    role: "PostgreSQL relational core with connection pooling, read replicas & Redis state cache",
-    protocol: "Native TCP / PgBouncer pooler",
-    sla: "Query budget < 12ms",
-    failover: "Automated Patroni leader election",
-    throughput: "14,000 IOPS provisioned",
-  },
-  {
-    id: "telemetry",
-    name: "05 / Observability & Integrity",
-    role: "Continuous OpenTelemetry traces, automated error budgets & canary health gates",
-    protocol: "OTLP gRPC push / Prometheus scrape",
-    sla: "Anomaly detection < 450ms",
-    failover: "Out-of-band telemetry buffer",
-    throughput: "Real-time trace sampling",
+    id: "persistence",
+    name: "04 / PERSISTENT STORAGE",
+    domain: "PostgreSQL Primary + Read Replicas & Redis",
+    spec: "Connection poolers (PgBouncer) with Patroni automated failover.",
+    guarantee: "ACID compliance • Multi-zone snapshot durability",
   },
 ];
 
 export default function HeroSection() {
-  const [selectedNode, setSelectedNode] = useState<TopologyNode>(TOPOLOGY_NODES[1]);
+  const [activeSpec, setActiveSpec] = useState<SpecNode>(SPEC_NODES[0]);
 
   return (
-    <section className="relative bg-[#19191a] text-white pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden border-b border-[#323234]">
-      {/* Background structural alignment grid */}
+    <section className="relative bg-[#ffffff] text-[#000000] pt-32 pb-24 md:pt-40 md:pb-32 border-b border-[#e6e6e6] overflow-hidden">
+      
+      {/* Editorial side masthead label (Section 45) */}
       <div 
-        className="absolute inset-0 pointer-events-none technical-grid opacity-60" 
-        aria-hidden="true" 
-      />
+        className="hidden lg:block absolute right-8 top-1/2 -translate-y-1/2 masthead-vertical-label text-[10px] font-mono text-[#999999] tracking-[0.25em] uppercase select-none pointer-events-none"
+        aria-hidden="true"
+      >
+        VECTIS // DIGITAL SYSTEMS MONOGRAPH • VOL. 26
+      </div>
 
-      <div className="relative max-w-[1200px] mx-auto px-6">
-        {/* Top technical taxonomy marker */}
-        <div className="flex items-center gap-3 mb-8">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-[#323234] border border-[#464554] text-[#bfbec9] font-mono text-[11px] tracking-wide uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ff470a]" />
-            SPEC // ENTERPRISE IT & PLATFORM ARCHITECTURE
-          </span>
-          <span className="h-[1px] w-12 bg-[#323234] hidden sm:inline-block" />
-          <span className="text-[#76757f] font-mono text-[11px] hidden sm:inline-block">
-            REV 2026.4 // PROD-HARDENED
-          </span>
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10">
+        
+        {/* Section Index Marker */}
+        <div className="text-[11px] font-mono uppercase tracking-[0.15em] text-[#666666] mb-8 pb-3 border-b border-[#e6e6e6] flex items-center justify-between">
+          <span>00 / STUDIO THESIS & PLATFORM ARCHITECTURE</span>
+          <span className="hidden sm:inline text-[#999999]">SAN FRANCISCO • ZURICH</span>
         </div>
 
-        {/* Asymmetric 7 / 5 Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
+        {/* Asymmetric Monograph Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
-          {/* Left Column (7 cols): The Agency Proposition */}
-          <div className="lg:col-span-7 flex flex-col justify-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-normal leading-[1.12] tracking-[-0.02em] font-display text-white mb-6">
-              We architect, rebuild, and operate the core systems your business{" "}
-              <span className="text-white underline decoration-[#ff470a] decoration-4 underline-offset-8">
-                cannot afford to fail.
-              </span>
-            </h1>
-
-            <p className="text-lg sm:text-[18px] leading-[28px] text-[#bfbec9] max-w-xl mb-9">
-              High-throughput backend architectures, zero-downtime legacy migrations, 
-              and mission-critical operational tools. Engineered by senior technical architects 
-              who treat production software as a durable asset, not disposable code.
-            </p>
-
-            {/* Action buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-12">
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center gap-2.5 h-12 px-7 rounded-full bg-[#ff470a] hover:bg-[#ff561d] text-white text-[14px] font-medium transition-colors duration-200 shadow-[0_4px_8px_rgba(0,0,0,0.2)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff470a]"
-              >
-                <span>Initiate Technical Scope</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-
-              <a
-                href="#capabilities"
-                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full bg-[#323234] hover:bg-[#464554] text-white text-[14px] font-medium border border-[#464554] transition-colors duration-200 focus:outline-none"
-              >
-                <span>Review Core Capabilities</span>
-              </a>
-            </div>
-
-            {/* Measured Technical Parameters (Real metrics of our architectural bar) */}
-            <div className="pt-8 border-t border-[#323234] grid grid-cols-3 gap-6 font-mono">
-              <div>
-                <div className="text-[11px] text-[#76757f] uppercase tracking-wider mb-1">
-                  Availability Bar
-                </div>
-                <div className="text-lg font-semibold text-white">99.99%</div>
-                <div className="text-[11px] text-[#bfbec9]">zero-panic cutovers</div>
-              </div>
-
-              <div>
-                <div className="text-[11px] text-[#76757f] uppercase tracking-wider mb-1">
-                  Latency Budget
-                </div>
-                <div className="text-lg font-semibold text-white">&lt; 45ms</div>
-                <div className="text-[11px] text-[#bfbec9]">P99 service threshold</div>
-              </div>
-
-              <div>
-                <div className="text-[11px] text-[#76757f] uppercase tracking-wider mb-1">
-                  Code Governance
-                </div>
-                <div className="text-lg font-semibold text-white">100% IP</div>
-                <div className="text-[11px] text-[#bfbec9]">day-one client transfer</div>
+          {/* Left Column (7 cols): Editorial Typography */}
+          <div className="lg:col-span-7">
+            
+            {/* The Signature Two-Line Headline (Section 14) */}
+            <div className="mb-8">
+              <h1 className="type-display font-normal text-[#000000] tracking-[-0.035em]">
+                We architect digital systems
+              </h1>
+              <div className="type-display font-normal italic text-[#808080] tracking-[-0.035em] mt-1">
+                that businesses rely upon.
               </div>
             </div>
+
+            {/* Narrow Editorial Body Column (Section 22: 250-400px width) */}
+            <div className="max-w-[380px] text-[#333333] text-[15px] leading-[1.3] mb-10 font-normal">
+              High-throughput backend engineering, zero-downtime legacy decoupling, 
+              and mission-critical operational tooling. Built by senior systems architects 
+              who treat production code as a durable corporate asset.
+            </div>
+
+            {/* Typographic Actions (Section 16: No filled colored buttons) */}
+            <div className="flex flex-wrap items-center gap-8 pt-4 border-t border-[#e6e6e6]">
+              <Link
+                href="/services"
+                className="font-brand text-[12px] font-semibold tracking-[0.08em] uppercase text-[#000000] hover:text-[#666666] transition-colors flex items-center gap-2"
+              >
+                <span>Explore Service Catalog</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+
+              <Link
+                href="/#cases"
+                className="font-brand text-[12px] font-medium tracking-[0.08em] uppercase text-[#666666] hover:text-[#000000] transition-colors flex items-center gap-1.5"
+              >
+                <span>Selected Portfolios</span>
+                <span className="text-[#999999]">→</span>
+              </Link>
+            </div>
+
+            {/* Typographic Scroll Cue (Section 46) */}
+            <div className="mt-14 font-mono text-[10px] text-[#999999] tracking-[0.2em] uppercase">
+              [ SCROLL DOWN FOR MONOGRAPH INDEX ]
+            </div>
+
           </div>
 
-          {/* Right Column (5 cols): Authentic Engineering Visual — System Topology Inspector */}
+          {/* Right Column (5 cols): Physical Architectural Plate (Section 34: 33.76px radius) */}
           <div className="lg:col-span-5">
-            <div className="bg-[#222224] border border-[#323234] rounded-[16px] overflow-hidden shadow-[0_8px_9px_rgba(0,0,0,0.24)]">
-              {/* Terminal-style header */}
-              <div className="px-5 py-3.5 bg-[#19191a] border-b border-[#323234] flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#ff470a]/80" />
-                  <span className="font-mono text-xs text-[#bfbec9] font-medium">
-                    ARCHITECTURAL TOPOLOGY MAP
-                  </span>
-                </div>
-                <span className="font-mono text-[10px] text-[#76757f] uppercase tracking-wider">
-                  ACTIVE SPEC // CLUSTER-V4
+            <div className="bg-[#f2f2f2] border border-[#e6e6e6] radius-container p-7">
+              
+              <div className="flex items-baseline justify-between pb-4 mb-5 border-b border-[#cccccc]">
+                <span className="font-brand text-[11px] font-bold text-[#000000] uppercase tracking-wider">
+                  SYSTEM TOPOLOGY PLATE
+                </span>
+                <span className="font-mono text-[10px] text-[#808080]">
+                  SPEC // 2026.4
                 </span>
               </div>
 
-              {/* Topology Node Selector */}
-              <div className="p-3 bg-[#19191a]/60 border-b border-[#323234] flex flex-col gap-1.5">
-                {TOPOLOGY_NODES.map((node) => {
-                  const isSelected = selectedNode.id === node.id;
+              {/* Node selector tabs */}
+              <div className="space-y-2 mb-6">
+                {SPEC_NODES.map((node) => {
+                  const isSelected = activeSpec.id === node.id;
                   return (
                     <button
                       key={node.id}
                       type="button"
-                      onClick={() => setSelectedNode(node)}
-                      className={`w-full text-left px-3.5 py-2.5 rounded-[8px] font-mono text-xs transition-all duration-150 flex items-center justify-between ${
+                      onClick={() => setActiveSpec(node)}
+                      className={`w-full text-left p-3 rounded-[8px] font-mono text-xs transition-colors flex items-center justify-between border ${
                         isSelected
-                          ? "bg-[#ff470a]/10 border border-[#ff470a]/40 text-white"
-                          : "bg-transparent hover:bg-[#323234]/40 border border-transparent text-[#bfbec9]"
+                          ? "bg-[#ffffff] text-[#000000] border-[#000000] font-semibold"
+                          : "bg-transparent text-[#666666] border-transparent hover:text-[#000000]"
                       }`}
                     >
-                      <span className="font-medium">{node.name}</span>
-                      <span className={`text-[10px] uppercase ${isSelected ? "text-[#ff470a] font-bold" : "text-[#76757f]"}`}>
-                        {isSelected ? "INSPECTING" : "VIEW"}
+                      <span>{node.name}</span>
+                      <span className="text-[10px] text-[#999999]">
+                        {isSelected ? "[ ACTIVE ]" : "SELECT"}
                       </span>
                     </button>
                   );
                 })}
               </div>
 
-              {/* Detailed Specification for Active Node */}
-              <div className="p-5 bg-[#222224]">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono text-[11px] text-[#ff470a] uppercase tracking-wider font-semibold">
-                    COMPONENT SPECIFICATION
+              {/* Detailed Spec Information */}
+              <div className="bg-[#ffffff] p-5 rounded-[12px] border border-[#e6e6e6] space-y-3 font-mono text-xs">
+                <div>
+                  <span className="text-[10px] text-[#808080] uppercase block">
+                    Domain Implementation
                   </span>
-                  <span className="font-mono text-[10px] text-[#76757f]">
-                    TOPOLOGY NODE {selectedNode.name.slice(0, 2)}
+                  <span className="text-[#000000] font-medium text-[11px] block mt-0.5">
+                    {activeSpec.domain}
                   </span>
                 </div>
 
-                <p className="text-sm text-white font-medium mb-4 leading-relaxed">
-                  {selectedNode.role}
-                </p>
-
-                {/* Technical properties */}
-                <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#323234] font-mono text-xs">
-                  <div>
-                    <span className="text-[10px] text-[#76757f] block uppercase mb-0.5">
-                      Protocol & Wire Spec
-                    </span>
-                    <span className="text-white text-[11px]">
-                      {selectedNode.protocol}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-[#76757f] block uppercase mb-0.5">
-                      Latency / Loss SLA
-                    </span>
-                    <span className="text-[#f78da7] text-[11px]">
-                      {selectedNode.sla}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-[#76757f] block uppercase mb-0.5">
-                      Failover Strategy
-                    </span>
-                    <span className="text-white text-[11px]">
-                      {selectedNode.failover}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-[#76757f] block uppercase mb-0.5">
-                      Throughput Budget
-                    </span>
-                    <span className="text-white text-[11px]">
-                      {selectedNode.throughput}
-                    </span>
-                  </div>
+                <div className="pt-2 border-t border-[#f2f2f2]">
+                  <span className="text-[10px] text-[#808080] uppercase block">
+                    Architectural Spec
+                  </span>
+                  <p className="text-[#333333] text-[11px] leading-relaxed mt-0.5">
+                    {activeSpec.spec}
+                  </p>
                 </div>
 
-                {/* Verification footer */}
-                <div className="mt-4 pt-3 border-t border-[#323234]/80 flex items-center justify-between text-[11px] font-mono text-[#76757f]">
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    Hermetic Sandbox Tested
+                <div className="pt-2 border-t border-[#f2f2f2]">
+                  <span className="text-[10px] text-[#808080] uppercase block">
+                    Invariant Guarantee
                   </span>
-                  <span>ZERO UNKNOWN DRIFT</span>
+                  <span className="text-[#000000] text-[11px] font-semibold block mt-0.5">
+                    {activeSpec.guarantee}
+                  </span>
                 </div>
               </div>
+
+              <div className="mt-4 pt-3 border-t border-[#e6e6e6] flex items-center justify-between text-[10px] font-mono text-[#808080]">
+                <span>100% HERMETICALLY VERIFIED</span>
+                <span>ZERO DRIFT</span>
+              </div>
+
             </div>
           </div>
 
         </div>
+
       </div>
     </section>
   );

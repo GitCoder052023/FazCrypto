@@ -1,130 +1,132 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X, ArrowRight } from "lucide-react";
+import BookingModal from "./BookingModal";
 
 export default function AgencyNav() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 24);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const pathname = usePathname();
 
   const navLinks = [
-    { label: "Reality", href: "#problem" },
-    { label: "Capabilities", href: "#capabilities" },
-    { label: "Workflow", href: "#workflow" },
-    { label: "Taxonomy", href: "#taxonomy" },
-    { label: "Case Systems", href: "#cases" },
-    { label: "Engagement", href: "#engagement" },
+    { label: "SERVICES", href: "/services" },
+    { label: "WORK", href: "/#cases" },
+    { label: "APPROACH", href: "/#workflow" },
+    { label: "TAXONOMY", href: "/#taxonomy" },
+    { label: "ENGAGEMENT", href: "/#engagement" },
+    { label: "PIPELINE", href: "/demo/bookings" },
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
-        isScrolled
-          ? "bg-[#19191a]/95 border-b border-[#323234] shadow-[0_1px_2px_rgba(0,0,0,0.2)] backdrop-blur-sm"
-          : "bg-[#19191a] border-b border-[#323234]/60"
-      }`}
-    >
-      <div className="max-w-[1200px] mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Brand identity */}
-        <a
-          href="#"
-          className="flex items-center gap-3 text-white group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff470a]"
-        >
-          <div className="flex items-center gap-1.5 font-mono text-xs tracking-wider">
-            <span className="w-2.5 h-2.5 bg-[#ff470a] rounded-[2px]" />
-            <span className="font-bold tracking-tight text-lg font-display text-white">
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#ffffff] border-b border-[#e6e6e6]">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 h-20 flex items-center justify-between">
+          
+          {/* Studio Brandmark */}
+          <Link
+            href="/"
+            className="flex items-baseline gap-3 text-[#000000] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#000000]"
+          >
+            <span className="font-bold tracking-[-0.03em] text-xl font-brand">
               VECTIS
             </span>
-            <span className="text-[#76757f] hidden sm:inline-block">/</span>
-            <span className="text-[#bfbec9] text-[11px] font-medium hidden sm:inline-block">
-              SYSTEMS ENGINEERING
+            <span className="text-[#999999] text-[11px] font-mono tracking-wider hidden sm:inline-block">
+              [ SYSTEMS STUDIO ]
             </span>
-          </div>
-        </a>
+          </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-7" aria-label="Main Navigation">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[14px] font-medium text-[#bfbec9] hover:text-white transition-colors duration-150 py-1"
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center gap-8" aria-label="Primary Navigation">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href || (link.href !== "/services" && link.href !== "/demo/bookings" && pathname === "/" && false);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="font-brand text-[11px] tracking-[0.08em] font-medium text-[#666666] hover:text-[#000000] transition-colors py-1 flex items-center gap-1"
+                >
+                  {isActive && <span className="text-[#000000] mr-0.5">▸</span>}
+                  <span>{link.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Action: Typographic Link CTA (No filled button per design system) */}
+          <div className="hidden md:flex items-center gap-6">
+            <button
+              type="button"
+              onClick={() => setBookingModalOpen(true)}
+              className="font-brand text-[11px] font-semibold tracking-[0.08em] uppercase text-[#000000] hover:text-[#666666] transition-colors flex items-center gap-1.5 focus:outline-none"
             >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        {/* Actions & Status */}
-        <div className="hidden md:flex items-center gap-4">
-          <div className="flex items-center gap-2 font-mono text-[11px] text-[#bfbec9] mr-2">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Q3/Q4 SLOTS OPEN</span>
+              <span>Book a Service</span>
+              <ArrowRight className="w-3 h-3" />
+            </button>
           </div>
 
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full bg-[#ff470a] hover:bg-[#ff561d] text-white text-[14px] font-medium transition-colors duration-200 shadow-[0_4px_8px_rgba(0,0,0,0.08)] active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#ff470a]"
-          >
-            <span>Discuss a Project</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
-        </div>
-
-        {/* Mobile menu trigger */}
-        <div className="flex md:hidden items-center gap-3">
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center h-9 px-4 rounded-full bg-[#ff470a] text-white text-xs font-medium"
-          >
-            Scope Project
-          </a>
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-[#bfbec9] hover:text-white focus:outline-none"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-[#19191a] border-b border-[#323234] px-6 py-6 flex flex-col gap-4">
-          <div className="flex items-center gap-2 font-mono text-[12px] text-[#bfbec9] pb-3 border-b border-[#323234]">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
-            <span>ENGINEERING PODS ACTIVE</span>
-          </div>
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-base font-medium text-white hover:text-[#ff470a] py-2 transition-colors"
+          {/* Mobile menu trigger */}
+          <div className="flex md:hidden items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setBookingModalOpen(true)}
+              className="font-brand text-[11px] font-semibold tracking-wider uppercase text-[#000000] underline underline-offset-4"
             >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={() => setMobileMenuOpen(false)}
-            className="mt-2 flex items-center justify-center gap-2 h-12 w-full rounded-full bg-[#ff470a] text-white font-medium text-sm"
-          >
-            <span>Initiate Technical Scope</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
+              Book
+            </button>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-[#000000] focus:outline-none"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 text-[#000000]" />}
+            </button>
+          </div>
         </div>
-      )}
-    </header>
+
+        {/* Mobile Full-Screen Editorial Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-[#ffffff] border-b border-[#e6e6e6] px-6 py-8 flex flex-col gap-5 animate-in fade-in duration-150">
+            <div className="text-[10px] font-mono text-[#999999] tracking-wider uppercase pb-2 border-b border-[#e6e6e6]">
+              DIRECTORY // INDEX
+            </div>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="font-brand text-lg font-medium tracking-tight text-[#000000] hover:text-[#666666] transition-colors flex items-center justify-between"
+              >
+                <span>{link.label}</span>
+                <span className="text-[#999999] text-xs font-mono">→</span>
+              </Link>
+            ))}
+            <div className="pt-4 border-t border-[#e6e6e6]">
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setBookingModalOpen(true);
+                }}
+                className="w-full h-12 rounded-[42.96px] bg-[#000000] text-[#ffffff] font-brand text-xs font-medium uppercase tracking-[0.08em] flex items-center justify-center gap-2"
+              >
+                <span>Initiate Project Scope</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Booking Modal Instance */}
+      <BookingModal
+        isOpen={bookingModalOpen}
+        onClose={() => setBookingModalOpen(false)}
+        preselectedServiceId="custom-web-application"
+      />
+    </>
   );
 }

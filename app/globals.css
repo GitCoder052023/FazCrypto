@@ -1,81 +1,202 @@
 @import "tailwindcss";
 
+:root {
+  /* Colors — Absolute Monochrome */
+  --color-pure-white: #ffffff;
+  --color-ink-black: #000000;
+  --color-obsidian: #1f1f1f;
+  --color-graphite-wash: #333333;
+  --color-slate: #666666;
+  --color-steel: #808080;
+  --color-fog: #999999;
+  --color-pale-mist: #cccccc;
+  --color-vapor: #e6e6e6;
+  --color-ash: #f2f2f2;
+
+  /* Spacing — 4px Base */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-48: 48px;
+  --spacing-52: 52px;
+  --spacing-56: 56px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-112: 112px;
+  --spacing-128: 128px;
+  --spacing-184: 184px;
+
+  /* Radii */
+  --radius-card: 33.76px;
+  --radius-button: 42.96px;
+  --radius-image: 33.76px;
+
+  /* Layout */
+  --page-max-width: 1440px;
+
+  /* Fonts */
+  --font-brand: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
 @theme {
-  --color-primary: #ff470a;
-  --color-primary-container: #ff561d;
-  --color-inverse-primary: #ff8c42;
+  --color-pure-white: #ffffff;
+  --color-ink-black: #000000;
+  --color-obsidian: #1f1f1f;
+  --color-graphite-wash: #333333;
+  --color-slate: #666666;
+  --color-steel: #808080;
+  --color-fog: #999999;
+  --color-pale-mist: #cccccc;
+  --color-vapor: #e6e6e6;
+  --color-ash: #f2f2f2;
 
-  --color-surface: #ffffff;
-  --color-surface-dim: #f5f5f6;
-  --color-surface-container-lowest: #fafafa;
-  --color-surface-container-low: #f5f5f6;
-  --color-surface-container: #ededed;
-  --color-surface-container-high: #e0e0e0;
-  --color-surface-container-highest: #d0d0d0;
-
-  --color-inverse-surface: #19191a;
-  --color-inverse-surface-elevated: #222224;
-  --color-inverse-surface-border: #323234;
-  --color-inverse-on-surface: #ffffff;
-  --color-inverse-text-muted: #9594a1;
-
-  --color-secondary: #323234;
-  --color-secondary-container: #464554;
-
-  --color-tertiary: #f78da7;
-  --color-tertiary-container: #ffc0d9;
-  --color-on-tertiary-container: #5a1a3a;
-
-  --color-outline: #76757f;
-  --color-outline-variant: #bfbec9;
-
-  --font-display: var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 9px rgba(0, 0, 0, 0.06);
-
-  --radius-button: 9999px;
-  --radius-card: 16px;
-  --radius-input: 6px;
+  --font-brand: var(--font-brand);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: #ffffff;
   }
 
   body {
     background-color: #ffffff;
-    color: #19191a;
-    font-family: var(--font-sans);
+    color: #000000;
+    font-family: var(--font-body);
+    font-feature-settings: "ss01", "cv05", "cv08";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Universal Flatness — Absolute Elimination of Shadows, Glow, and Blur */
+  *, *::before, *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
+    font-family: var(--font-brand);
+    font-feature-settings: "ss01", "cv05", "cv08";
+    letter-spacing: -0.025em;
   }
 }
 
-/* Custom architectural line patterns & technical accents */
-.technical-grid {
-  background-size: 32px 32px;
+/* Hairline Structural Dividers */
+.border-hairline {
+  border-width: 1px;
+  border-color: #e6e6e6;
+}
+
+.border-hairline-dark {
+  border-width: 1px;
+  border-color: #333333;
+}
+
+/* Vertical Documentary Side Label */
+.masthead-vertical-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* Rounded Geometry per Design System */
+.radius-container {
+  border-radius: 33.76px;
+}
+
+.radius-button {
+  border-radius: 42.96px;
+}
+
+.radius-image {
+  border-radius: 33.76px;
+}
+
+/* Typographic Scale Utility Classes */
+.type-display {
+  font-size: 73px;
+  line-height: 1.00;
+  letter-spacing: -0.035em;
+}
+
+@media (max-width: 1024px) {
+  .type-display {
+    font-size: 52px;
+    line-height: 1.05;
+  }
+}
+
+@media (max-width: 640px) {
+  .type-display {
+    font-size: 44px;
+    line-height: 1.10;
+  }
+}
+
+.type-heading-lg {
+  font-size: 52px;
+  line-height: 1.00;
+  letter-spacing: -0.03em;
+}
+
+.type-heading {
+  font-size: 35px;
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+}
+
+.type-heading-sm {
+  font-size: 28px;
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+}
+
+.type-subheading {
+  font-size: 19px;
+  line-height: 1.20;
+  letter-spacing: -0.015em;
+}
+
+.type-body-lg {
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.type-body {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.type-caption {
+  font-size: 10px;
+  line-height: 1.30;
+  letter-spacing: 0.05em;
+}
+
+/* Editorial Monograph Grid (Subtle Structural Guide) */
+.editorial-grid {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+
+.editorial-grid-dark {
+  background-size: 48px 48px;
   background-image: 
     linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
 
-.technical-grid-light {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-}
-
-/* Respect reduced motion */
+/* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
