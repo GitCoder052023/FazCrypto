@@ -19,6 +19,7 @@ export default function ServicesPage() {
     { id: "backend" as ServiceCategory, label: "Backend & API" },
     { id: "cloud" as ServiceCategory, label: "Cloud & Infrastructure" },
     { id: "maintenance" as ServiceCategory, label: "Maintenance & SRE" },
+    { id: "design" as ServiceCategory, label: "Product Design" },
   ];
 
   const filteredServices =
@@ -140,7 +141,7 @@ export default function ServicesPage() {
                       {/* Deliverables snippet */}
                       <div className="pt-3">
                         <span className="font-mono text-[10px] text-[#808080] uppercase tracking-wider block mb-2">
-                          STANDARD INCLUSIONS:
+                          STANDARD DELIVERABLES:
                         </span>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {service.deliverables.slice(0, 4).map((d, i) => (
@@ -196,6 +197,62 @@ export default function ServicesPage() {
                   </div>
                 </div>
               ))}
+            </div>
+
+          </div>
+        </section>
+
+        {/* ========================================================
+            DECISION SUPPORT: ARCHITECTURAL COMPARISON (Section 26)
+           ======================================================== */}
+        <section className="py-20 md:py-28 bg-[#ffffff] border-b border-[#e6e6e6]">
+          <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
+            
+            <div className="max-w-2xl mb-12">
+              <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-3">
+                [ SERVICE DIFFERENTIATION // DECISION SUPPORT ]
+              </div>
+              <h2 className="type-heading font-medium text-[#000000] mb-3">
+                Which architecture matches your requirements?
+                <span className="block italic text-[#808080] font-normal">A direct comparison of core capability scopes.</span>
+              </h2>
+              <p className="text-[14px] text-[#666666] leading-relaxed">
+                Review key technical boundaries across our primary services to determine the appropriate starting scope.
+              </p>
+            </div>
+
+            {/* Comparison Matrix */}
+            <div className="border border-[#e6e6e6] radius-container overflow-x-auto font-mono text-[12px]">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-[#e6e6e6] bg-[#f2f2f2] text-[#808080] text-[10px] uppercase tracking-wider">
+                    <th className="p-4 sm:p-5 font-medium">Architectural Capability</th>
+                    <th className="p-4 sm:p-5 font-medium text-[#000000]">Business Website</th>
+                    <th className="p-4 sm:p-5 font-medium text-[#000000]">Web Application</th>
+                    <th className="p-4 sm:p-5 font-medium text-[#000000]">API &amp; Backend</th>
+                    <th className="p-4 sm:p-5 font-medium text-[#000000]">Cloud / SRE</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#e6e6e6]">
+                  {[
+                    { feature: "Headless CMS / Editorial Front", s1: "Included", s2: "Optional", s3: "—", s4: "—" },
+                    { feature: "User Authentication & RBAC", s1: "—", s2: "Included", s3: "Included", s4: "IAM Policy" },
+                    { feature: "Relational DB (PostgreSQL)", s1: "—", s2: "Included", s3: "Included", s4: "Automated RDS" },
+                    { feature: "Custom Operational Workflows", s1: "—", s2: "Included", s3: "Included", s4: "—" },
+                    { feature: "High-Concurrency (>10k req/s)", s1: "CDN Cache", s2: "Optional", s3: "Engineered", s4: "Auto-scaled" },
+                    { feature: "Infrastructure as Code (Terraform)", s1: "Managed", s2: "Docker", s3: "Docker", s4: "Included" },
+                    { feature: "24/7 Production Alerting / SRE", s1: "Add-on", s2: "Add-on", s3: "Add-on", s4: "Included" },
+                  ].map((row, i) => (
+                    <tr key={i} className="hover:bg-[#fafafa] transition-colors">
+                      <td className="p-4 sm:p-5 text-[#000000] font-sans font-medium text-[13px]">{row.feature}</td>
+                      <td className="p-4 sm:p-5 text-[#666666]">{row.s1}</td>
+                      <td className="p-4 sm:p-5 text-[#666666]">{row.s2}</td>
+                      <td className="p-4 sm:p-5 text-[#666666]">{row.s3}</td>
+                      <td className="p-4 sm:p-5 text-[#666666]">{row.s4}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
           </div>
@@ -393,4 +450,3 @@ export default function ServicesPage() {
     </div>
   );
 }
-

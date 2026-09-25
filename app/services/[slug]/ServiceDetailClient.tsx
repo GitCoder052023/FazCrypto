@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import AgencyNav from "../../components/AgencyNav";
 import Footer from "../../components/Footer";
 import BookingModal from "../../components/BookingModal";
-import { Service, DEMO_SERVICES, formatPriceDisplay } from "@/lib/services-data";
+import { Service, DEMO_SERVICES, formatINR, formatPriceDisplay } from "@/lib/services-data";
 
 interface ServiceDetailClientProps {
   service: Service;
@@ -13,9 +13,27 @@ interface ServiceDetailClientProps {
 
 export default function ServiceDetailClient({ service }: ServiceDetailClientProps) {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [selectedAddonIds, setSelectedAddonIds] = useState<string[]>([]);
 
   // Find other services in the catalog for cross-linking
   const relatedServices = DEMO_SERVICES.filter((s) => s.id !== service.id).slice(0, 3);
+
+  const toggleAddon = (addonId: string) => {
+    if (selectedAddonIds.includes(addonId)) {
+      setSelectedAddonIds(selectedAddonIds.filter((id) => id !== addonId));
+    } else {
+      setSelectedAddonIds([...selectedAddonIds, addonId]);
+    }
+  };
+
+  // Live dynamic calculation for base + add-ons
+  const dynamicTotal = useMemo(() => {
+    const base = service.price || 0;
+    const addonsTotal = (service.optionalAddons || [])
+      .filter((a) => selectedAddonIds.includes(a.id))
+      .reduce((sum, a) => sum + a.price, 0);
+    return base + addonsTotal;
+  }, [service, selectedAddonIds]);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#ffffff] text-[#000000]">
@@ -24,7 +42,7 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
       <main className="flex-1 pt-28 md:pt-36">
         
         {/* ========================================================
-            HERO: Service Context, Indicative Pricing & Primary CTA
+            HERO: Service Context, Interactive Pricing & Primary CTA
            ======================================================== */}
         <section className="bg-[#ffffff] text-[#000000] border-b border-[#e6e6e6] py-16 md:py-24 relative">
           <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
@@ -56,7 +74,7 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
                   {service.description}
                 </p>
 
-                {/* Tech Pills */}
+                {/* Tech Stack Pills */}
                 <div>
                   <span className="font-mono text-[10px] text-[#808080] uppercase tracking-wider block mb-3">
                     PRIMARY ARCHITECTURAL TECHNOLOGIES:
@@ -74,35 +92,36 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
                 </div>
               </div>
 
-              {/* Right Column (5 cols): Indicative Pricing Box */}
+              {/* Right Column (5 cols): Interactive Pricing Card with Add-ons (Section 17 & 18) */}
               <div className="lg:col-span-5 bg-[#f2f2f2] border border-[#e6e6e6] radius-container p-8 md:p-10">
                 <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#e6e6e6]">
                   <span className="font-mono text-[10px] text-[#000000] font-medium uppercase tracking-widest">
-                    INDICATIVE COMMERCIAL SCOPE
+                    COMMERCIAL INTAKE SPECIFICATION
                   </span>
                   <span className="font-mono text-[9px] text-[#808080] uppercase tracking-widest">
-                    [ DEMO PRICING ]
+                    [ BASELINE SCOPE ]
                   </span>
                 </div>
 
                 <div className="mb-6">
                   <span className="font-mono text-[10px] text-[#808080] block uppercase tracking-wider mb-1">
-                    STARTING ESTIMATE
+                    ESTIMATED INVESTMENT
                   </span>
                   <div className="type-heading font-medium font-mono text-[#000000] tracking-tight">
-                    {formatPriceDisplay(service.pricing)}
+                    {dynamicTotal > 0 ? formatINR(dynamicTotal) : formatPriceDisplay(service.pricing)}
                   </div>
                   <p className="font-mono text-[11px] text-[#808080] mt-2 leading-relaxed">
                     {service.pricing.disclaimer}
                   </p>
                 </div>
 
-                <div className="p-4 bg-[#ffffff] radius-container border border-[#e6e6e6] font-mono text-[11px] text-[#333333] space-y-2.5 mb-8">
-                  <div className="flex justify-between pb-2 border-b border-[#e6e6e6]">
-                    <span className="text-[#808080]">Typical Horizon:</span>
+                {/* Delivery Horizon & Guarantees */}
+                <div className="p-4 bg-[#ffffff] radius-container border border-[#e6e6e6] font-mono text-[11px] text-[#333333] space-y-2 mb-6">
+                  <div className="flex justify-between pb-1.5 border-b border-[#e6e6e6]">
+                    <span className="text-[#808080]">Delivery Horizon:</span>
                     <span className="text-[#000000] font-medium">{service.duration}</span>
                   </div>
-                  <div className="flex justify-between pb-2 border-b border-[#e6e6e6]">
+                  <div className="flex justify-between pb-1.5 border-b border-[#e6e6e6]">
                     <span className="text-[#808080]">Repository Transfer:</span>
                     <span className="text-[#000000] font-medium">100% Day One</span>
                   </div>
@@ -111,6 +130,38 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
                     <span className="text-[#000000] font-medium">Senior Systems Specialists</span>
                   </div>
                 </div>
+
+                {/* Interactive Add-ons (Section 17 & 18) */}
+                {service.optionalAddons && service.optionalAddons.length > 0 && (
+                  <div className="mb-6 space-y-2.5">
+                    <div className="font-mono text-[10px] text-[#808080] uppercase tracking-wider">
+                      SELECT OPTIONAL MODULES:
+                    </div>
+                    <div className="space-y-2">
+                      {service.optionalAddons.map((addon) => {
+                        const isChecked = selectedAddonIds.includes(addon.id);
+                        return (
+                          <button
+                            key={addon.id}
+                            type="button"
+                            onClick={() => toggleAddon(addon.id)}
+                            className={`w-full text-left p-3 radius-container border font-mono text-[11px] transition-all flex items-center justify-between cursor-pointer ${
+                              isChecked
+                                ? "bg-[#000000] text-[#ffffff] border-[#000000]"
+                                : "bg-[#ffffff] text-[#000000] border-[#e6e6e6] hover:border-[#cccccc]"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span>{isChecked ? "[✓]" : "[+]"}</span>
+                              <span className="font-medium">{addon.name}</span>
+                            </div>
+                            <span className="shrink-0 font-medium">+{formatINR(addon.price)}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 {/* Primary Booking CTA */}
                 <button
@@ -133,21 +184,21 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
         </section>
 
         {/* ========================================================
-            DELIVERABLES & TARGET AUDIENCE SECTION
+            DELIVERABLES & INCLUDED SCOPE (Section 06)
            ======================================================== */}
         <section className="py-20 md:py-28 bg-[#ffffff] border-b border-[#e6e6e6]">
           <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
               
-              {/* Left Column (7 cols): Concrete Technical Inclusions */}
+              {/* Left Column (7 cols): Concrete Technical Deliverables */}
               <div className="lg:col-span-7 space-y-6">
                 <div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-3">
-                    [ CONCRETE DELIVERABLES ]
+                    [ WHAT IS DELIVERED ]
                   </div>
                   <h2 className="type-heading font-medium text-[#000000]">
-                    Architectural inclusions.
+                    Concrete architectural deliverables.
                     <span className="block italic text-[#808080] font-normal">Production-verified artifacts.</span>
                   </h2>
                   <p className="text-[14px] text-[#666666] mt-3">
@@ -165,23 +216,23 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
                 </div>
               </div>
 
-              {/* Right Column (5 cols): Who this is for */}
+              {/* Right Column (5 cols): What's Included in Base Scope */}
               <div className="lg:col-span-5 space-y-6">
                 <div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-3">
-                    [ TARGET CONTEXT ]
+                    [ WHAT IS INCLUDED ]
                   </div>
                   <h2 className="type-heading font-medium text-[#000000]">
-                    Who this is for.
-                    <span className="block italic text-[#808080] font-normal">Operational inflection points.</span>
+                    Scope boundaries.
+                    <span className="block italic text-[#808080] font-normal">Standard contract coverage.</span>
                   </h2>
                   <p className="text-[14px] text-[#666666] mt-3">
-                    Engineered for organizations navigating these specific technical inflection states:
+                    Contractual guarantees included in the base engagement:
                   </p>
                 </div>
 
                 <div className="p-8 radius-container bg-[#f2f2f2] border border-[#e6e6e6] space-y-4">
-                  {service.idealFor.map((item, i) => (
+                  {service.included.map((item, i) => (
                     <div key={i} className="flex items-start gap-3 text-[13px] text-[#333333] pb-3 border-b border-[#e6e6e6] last:border-b-0 last:pb-0">
                       <span className="font-mono text-[11px] text-[#808080] shrink-0 mt-0.5">[{i + 1}]</span>
                       <span className="leading-relaxed">{item}</span>
@@ -196,21 +247,90 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
         </section>
 
         {/* ========================================================
-            WHAT AFFECTS THE FINAL PRICE? (PRICE TRANSPARENCY)
+            DECISION GUIDANCE & CLIENT REQUIREMENTS (Section 06 & 25)
+           ======================================================== */}
+        <section className="py-20 md:py-28 bg-[#ffffff] border-b border-[#e6e6e6]">
+          <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
+            
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+              
+              {/* Left Column (6 cols): Who this service is best for */}
+              <div className="lg:col-span-6 space-y-6">
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-3">
+                    [ CLIENT FIT // DECISION SUPPORT ]
+                  </div>
+                  <h2 className="type-heading font-medium text-[#000000]">
+                    Who this is best for.
+                    <span className="block italic text-[#808080] font-normal">Concrete inflection points.</span>
+                  </h2>
+                  <p className="text-[14px] text-[#666666] mt-2">
+                    Engineered for organizations navigating these specific technical scenarios:
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  {service.idealFor.map((situation, i) => (
+                    <div key={i} className="p-5 radius-container border border-[#e6e6e6] bg-[#fafafa] flex items-start gap-4">
+                      <span className="font-mono text-[11px] text-[#808080] shrink-0 mt-0.5">
+                        BEST FOR
+                      </span>
+                      <span className="text-[13px] text-[#333333] leading-relaxed">
+                        {situation}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Column (6 cols): What we need from you */}
+              <div className="lg:col-span-6 space-y-6">
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-3">
+                    [ CLIENT REQUIREMENTS ]
+                  </div>
+                  <h2 className="type-heading font-medium text-[#000000]">
+                    What we need from you.
+                    <span className="block italic text-[#808080] font-normal">Prerequisites to start.</span>
+                  </h2>
+                  <p className="text-[14px] text-[#666666] mt-2">
+                    To maintain our high engineering velocity, we require the following inputs:
+                  </p>
+                </div>
+
+                <div className="p-8 radius-container bg-[#f2f2f2] border border-[#e6e6e6] space-y-4">
+                  {service.requirements.map((req, i) => (
+                    <div key={i} className="flex items-start gap-3 text-[13px] text-[#333333] pb-3 border-b border-[#e6e6e6] last:border-b-0 last:pb-0">
+                      <span className="font-mono text-[11px] text-[#000000] shrink-0 mt-0.5">
+                        REQ 0{i + 1}
+                      </span>
+                      <span className="leading-relaxed">{req}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        {/* ========================================================
+            PRICE DRIVERS TRANSPARENCY (Section 07)
            ======================================================== */}
         <section className="py-20 md:py-28 bg-[#ffffff] border-b border-[#e6e6e6]">
           <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
             
             <div className="max-w-2xl mb-12">
               <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#808080] mb-3">
-                [ COST INTEGRITY ]
+                [ COST INTEGRITY &amp; SCOPE DYNAMICS ]
               </div>
               <h2 className="type-heading font-medium text-[#000000] mb-3">
-                What drives cost variations for this service?
-                <span className="block italic text-[#808080] font-normal">Objective complexity factors.</span>
+                Why does final pricing scale?
+                <span className="block italic text-[#808080] font-normal">Objective technical variables.</span>
               </h2>
               <p className="text-[14px] text-[#666666] leading-relaxed">
-                The baseline starting price covers standard production architecture. In commercial deployment, the following parameters determine final milestone budgets:
+                The baseline starting price covers our standard hardened implementation. In production engineering, the following variables dictate final milestone budgets:
               </p>
             </div>
 
@@ -306,15 +426,32 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
 
       </main>
 
+      {/* Minimal Mobile Sticky Booking Bar (Section 33) */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#ffffff] border-t border-[#e6e6e6] px-6 py-3.5 flex items-center justify-between font-mono text-xs">
+        <div>
+          <span className="text-[9px] text-[#808080] uppercase tracking-wider block">Estimated From</span>
+          <span className="font-medium text-[#000000]">
+            {dynamicTotal > 0 ? formatINR(dynamicTotal) : formatPriceDisplay(service.pricing)}
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={() => setBookingModalOpen(true)}
+          className="px-5 py-2.5 radius-button bg-[#000000] text-[#ffffff] text-[10px] font-mono uppercase tracking-widest font-medium cursor-pointer"
+        >
+          Book Service →
+        </button>
+      </div>
+
       <Footer />
 
-      {/* 1-Click Booking Modal preselected with this service */}
+      {/* 1-Click Booking Modal with preselected service & initial add-ons */}
       <BookingModal
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}
         preselectedServiceId={service.id}
+        initialAddonIds={selectedAddonIds}
       />
     </div>
   );
 }
-
