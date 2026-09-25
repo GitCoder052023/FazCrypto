@@ -1,217 +1,105 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import BookingModal from "./BookingModal";
-
-interface CapabilityNode {
-  id: string;
-  name: string;
-  domain: string;
-  spec: string;
-  guarantee: string;
-}
-
-const CAPABILITY_NODES: CapabilityNode[] = [
-  {
-    id: "web",
-    name: "01 / WEB & APP ENGINEERING",
-    domain: "Modern Web Applications & Digital Portals",
-    spec: "Production Next.js App Router, React 19, TypeScript, and responsive Tailwind CSS.",
-    guarantee: "Sub-100ms first paint • Lighthouse 95+ • 100% Repository IP transfer",
-  },
-  {
-    id: "backend",
-    name: "02 / BACKEND & API SYSTEMS",
-    domain: "High-Throughput Services & Data Schemas",
-    spec: "Compiled Go and Node.js microservices with PostgreSQL ACID storage and Redis caching.",
-    guarantee: "P99 < 50ms latency • Strict contract validation • Sub-second replay",
-  },
-  {
-    id: "cloud",
-    name: "03 / CLOUD INFRASTRUCTURE & SRE",
-    domain: "Containerized Cloud Platforms & CI/CD",
-    spec: "Hermetic Docker compute on AWS/GCP, automated canary deployment gates, and health probes.",
-    guarantee: "Zero-downtime cutover • Codified infrastructure (Terraform) • 99.99% uptime target",
-  },
-  {
-    id: "pod",
-    name: "04 / DEDICATED ENGINEERING POD",
-    domain: "Embedded Senior Technology Team",
-    spec: "Autonomous senior engineering pod working directly inside your GitHub repository on sprint rhythm.",
-    guarantee: "Fixed monthly retainer • Direct architect access • No junior subcontractor handoffs",
-  },
-];
+import { ArrowDown, ArrowRight } from "lucide-react";
+import { DEMO_SERVICES, formatINR } from "@/lib/services-data";
 
 export default function HeroSection() {
-  const [activeSpec, setActiveSpec] = useState<CapabilityNode>(CAPABILITY_NODES[0]);
-  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  // Grab the first 4 services for the clean preview plate
+  const previewServices = DEMO_SERVICES.slice(0, 4);
 
   return (
-    <section className="relative bg-[#ffffff] text-[#000000] pt-32 pb-24 md:pt-40 md:pb-32 border-b border-[#e6e6e6] overflow-hidden">
-      
-      {/* Editorial side masthead label */}
-      <div 
-        className="hidden lg:block absolute right-8 top-1/2 -translate-y-1/2 masthead-vertical-label text-[10px] font-mono text-[#999999] tracking-[0.25em] uppercase select-none pointer-events-none"
-        aria-hidden="true"
-      >
-        VECTIS // DIGITAL SYSTEMS & TECHNOLOGY STUDIO • 2026
-      </div>
-
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-10">
+    <section className="relative bg-[#ffffff] text-[#000000] pt-32 pb-20 md:pt-40 md:pb-28 border-b border-[#e6e6e6]">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
         
-        {/* Section Index Marker */}
-        <div className="text-[11px] font-mono uppercase tracking-[0.15em] text-[#666666] mb-8 pb-3 border-b border-[#e6e6e6] flex items-center justify-between">
-          <span>01 / COMMERCIAL IT SERVICES &amp; SYSTEMS STUDIO</span>
-          <span className="hidden sm:inline text-[#999999]">SAN FRANCISCO • ZURICH</span>
+        {/* Section Marker */}
+        <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#808080] mb-8 pb-3 border-b border-[#e6e6e6] flex items-center justify-between">
+          <span>VECTIS // DIGITAL SERVICES STOREFRONT</span>
+          <span className="hidden sm:inline text-[#999999]">2026 CATALOG</span>
         </div>
 
-        {/* Asymmetric Monograph Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        {/* Hero Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Left Column (7 cols): Editorial Typography */}
+          {/* Left Column (7 cols): Proposition & Actions */}
           <div className="lg:col-span-7">
-            
-            {/* The Signature Two-Line Headline */}
-            <div className="mb-8">
-              <h1 className="type-display font-normal text-[#000000] tracking-[-0.035em]">
-                We design, build, and scale
-              </h1>
-              <div className="type-display font-normal italic text-[#808080] tracking-[-0.035em] mt-1">
-                digital systems that businesses rely upon.
-              </div>
-            </div>
+            <h1 className="type-display font-normal text-[#000000] tracking-[-0.035em]">
+              We design, build and scale
+              <span className="block italic text-[#808080] font-normal mt-1">
+                digital systems.
+              </span>
+            </h1>
 
-            {/* Editorial Body Column */}
-            <div className="max-w-[420px] text-[#333333] text-[15px] leading-[1.35] mb-10 font-normal">
-              Full-cycle software engineering for growing companies and modern enterprises. 
-              From bespoke web applications to high-throughput backend infrastructure—delivered 
-              with fixed pricing, clear timelines, and 100% code ownership from day one.
-            </div>
+            <p className="mt-6 text-[17px] text-[#4d4d4d] max-w-md leading-relaxed">
+              Choose a service, see exactly what&apos;s included and book it directly. Fixed scopes, clear timelines, and upfront pricing.
+            </p>
 
-            {/* Typographic Actions */}
-            <div className="flex flex-wrap items-center gap-8 pt-4 border-t border-[#e6e6e6]">
-              <Link
-                href="/services"
-                className="font-brand text-[12px] font-semibold tracking-[0.08em] uppercase text-[#000000] hover:text-[#666666] transition-colors flex items-center gap-2"
+            {/* Direct Actions */}
+            <div className="flex flex-wrap items-center gap-5 mt-10 pt-6 border-t border-[#e6e6e6]">
+              <a
+                href="#services"
+                className="px-6 py-3 radius-button bg-[#000000] hover:bg-[#222222] text-[#ffffff] font-mono text-[11px] uppercase tracking-wider font-medium transition-colors flex items-center gap-2 cursor-pointer"
               >
-                <span>Explore Services &amp; Pricing</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+                <span>Browse services</span>
+                <ArrowDown className="w-3.5 h-3.5" />
+              </a>
 
-              <button
-                type="button"
-                onClick={() => setBookingModalOpen(true)}
-                className="font-brand text-[12px] font-medium tracking-[0.08em] uppercase text-[#666666] hover:text-[#000000] transition-colors flex items-center gap-1.5 cursor-pointer"
+              <a
+                href="#custom"
+                className="px-5 py-3 radius-button border border-[#e6e6e6] hover:border-[#000000] text-[#000000] font-mono text-[11px] uppercase tracking-wider font-medium transition-colors flex items-center gap-1.5 cursor-pointer"
               >
-                <span>Discuss a Project</span>
-                <span className="text-[#999999]">→</span>
-              </button>
+                <span>Custom project</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#808080]" />
+              </a>
             </div>
 
-            {/* Credibility Guarantee Strip */}
-            <div className="mt-12 pt-6 border-t border-[#f2f2f2] grid grid-cols-2 sm:grid-cols-3 gap-6 font-mono text-[11px] text-[#666666]">
-              <div>
-                <span className="text-[#000000] font-semibold block">100% IP TRANSFER</span>
-                <span className="text-[10px] text-[#808080]">Day-one repository access</span>
-              </div>
-              <div>
-                <span className="text-[#000000] font-semibold block">FIXED SCOPE &amp; PRICE</span>
-                <span className="text-[10px] text-[#808080]">No speculative billing</span>
-              </div>
-              <div className="col-span-2 sm:col-span-1">
-                <span className="text-[#000000] font-semibold block">SENIOR TALENT ONLY</span>
-                <span className="text-[10px] text-[#808080]">Zero junior subcontractors</span>
-              </div>
+            {/* Direct Value Reassurance */}
+            <div className="mt-12 flex flex-wrap items-center gap-6 font-mono text-[10px] uppercase tracking-widest text-[#808080]">
+              <span>✓ TRANSPARENT PRICING</span>
+              <span>✓ 100% CODE OWNERSHIP</span>
+              <span>✓ NO SALES INTERROGATIONS</span>
             </div>
-
           </div>
 
-          {/* Right Column (5 cols): Studio Capability Plate */}
+          {/* Right Column (5 cols): Clean Service Menu Preview Plate */}
           <div className="lg:col-span-5">
-            <div className="bg-[#f2f2f2] border border-[#e6e6e6] radius-container p-7">
-              
-              <div className="flex items-baseline justify-between pb-4 mb-5 border-b border-[#cccccc]">
-                <span className="font-brand text-[11px] font-bold text-[#000000] uppercase tracking-wider">
-                  STUDIO CAPABILITY PLATE
-                </span>
-                <span className="font-mono text-[10px] text-[#808080]">
-                  SPEC // 2026.4
-                </span>
+            <div className="bg-[#f7f7f7] border border-[#e6e6e6] radius-container p-6 sm:p-7">
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#e6e6e6] font-mono text-[10px] uppercase tracking-wider text-[#808080]">
+                <span>AVAILABLE SERVICES MENU</span>
+                <span className="text-[#000000] font-medium">FIXED RATES</span>
               </div>
 
-              {/* Node selector tabs */}
-              <div className="space-y-2 mb-6">
-                {CAPABILITY_NODES.map((node) => {
-                  const isSelected = activeSpec.id === node.id;
-                  return (
-                    <button
-                      key={node.id}
-                      type="button"
-                      onClick={() => setActiveSpec(node)}
-                      className={`w-full text-left p-3 rounded-[8px] font-mono text-xs transition-colors flex items-center justify-between border cursor-pointer ${
-                        isSelected
-                          ? "bg-[#ffffff] text-[#000000] border-[#000000] font-semibold"
-                          : "bg-transparent text-[#666666] border-transparent hover:text-[#000000]"
-                      }`}
-                    >
-                      <span>{node.name}</span>
-                      <span className="text-[10px] text-[#999999]">
-                        {isSelected ? "[ ACTIVE ]" : "VIEW"}
+              <div className="divide-y divide-[#e6e6e6]">
+                {previewServices.map((svc, i) => (
+                  <a
+                    key={svc.id}
+                    href={`#services`}
+                    className="py-3.5 flex items-center justify-between text-xs group block hover:bg-[#efefef] px-2 rounded-[6px] transition-colors"
+                  >
+                    <div>
+                      <span className="font-mono text-[10px] text-[#808080] mr-2">0{i + 1}</span>
+                      <span className="font-medium text-[#000000] group-hover:underline">
+                        {svc.name}
                       </span>
-                    </button>
-                  );
-                })}
+                    </div>
+                    <span className="font-mono text-[11px] text-[#4d4d4d] shrink-0">
+                      {svc.price ? `From ${formatINR(svc.price)}` : svc.pricing.label}
+                    </span>
+                  </a>
+                ))}
               </div>
 
-              {/* Detailed Spec Information */}
-              <div className="bg-[#ffffff] p-5 rounded-[12px] border border-[#e6e6e6] space-y-3 font-mono text-xs">
-                <div>
-                  <span className="text-[10px] text-[#808080] uppercase block">
-                    Core Discipline
-                  </span>
-                  <span className="text-[#000000] font-medium text-[11px] block mt-0.5">
-                    {activeSpec.domain}
-                  </span>
-                </div>
-
-                <div className="pt-2 border-t border-[#f2f2f2]">
-                  <span className="text-[10px] text-[#808080] uppercase block">
-                    Technical Deliverable
-                  </span>
-                  <p className="text-[#333333] text-[11px] leading-relaxed mt-0.5">
-                    {activeSpec.spec}
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-[#f2f2f2]">
-                  <span className="text-[10px] text-[#808080] uppercase block">
-                    Client Guarantee
-                  </span>
-                  <span className="text-[#000000] text-[11px] font-semibold block mt-0.5">
-                    {activeSpec.guarantee}
-                  </span>
-                </div>
+              <div className="mt-4 pt-4 border-t border-[#e6e6e6] flex items-center justify-between font-mono text-[10px] text-[#808080]">
+                <span>7 PACKAGES READY TO BOOK</span>
+                <a href="#services" className="text-[#000000] font-medium underline">
+                  VIEW FULL CATALOG →
+                </a>
               </div>
-
-              <div className="mt-4 pt-3 border-t border-[#e6e6e6] flex items-center justify-between text-[10px] font-mono text-[#808080]">
-                <span>CAPACITY: ACCEPTING Q3/Q4</span>
-                <span className="text-[#000000] font-medium">FIXED CONTRACTS</span>
-              </div>
-
             </div>
           </div>
 
         </div>
 
       </div>
-
-      {/* Booking Modal */}
-      <BookingModal
-        isOpen={bookingModalOpen}
-        onClose={() => setBookingModalOpen(false)}
-      />
     </section>
   );
 }
